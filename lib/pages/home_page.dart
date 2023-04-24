@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'start_animation_page.dart';
 // import 'package:intl/intl.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
@@ -50,7 +51,13 @@ class HomePage extends StatelessWidget {
                   )),
               SizedBox(height: 50),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StartAnimationPage()),
+                  );
+                },
                 child: Container(
                   padding: EdgeInsets.all(10.0),
                   margin: EdgeInsets.symmetric(horizontal: 25.0),
