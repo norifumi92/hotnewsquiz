@@ -28,7 +28,6 @@ doc/api/
 
 # IDE and editor files
 .idea
-.vscode/
 *.iml
 *.iws
 *.ipr
