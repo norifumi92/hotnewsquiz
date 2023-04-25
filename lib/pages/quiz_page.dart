@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:hotnewsquiz/components/normal_text.dart';
+import 'package:hotnewsquiz/components/quiz_option.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -77,15 +78,24 @@ class _QuizPageState extends State<QuizPage> {
                   child: Stack(
                     children: [
                       LayoutBuilder(
-                        builder: (context, constraints) => Container(
-                          width: seconds > 3
-                              ? constraints.maxWidth * seconds / 30
-                              : constraints.maxWidth * 0.1,
-                          decoration: BoxDecoration(
-                            gradient: kGradientPrimary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
+                        builder: (context, constraints) {
+                          double width;
+                          if (seconds > 3) {
+                            width = constraints.maxWidth * seconds / 30;
+                          } else if (seconds > 0) {
+                            width = constraints.maxWidth * 0.1;
+                          } else {
+                            width = 0;
+                          }
+
+                          return Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                              gradient: kGradientPrimary,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          );
+                        },
                       ),
                       Positioned.fill(
                           child: Padding(
@@ -101,7 +111,7 @@ class _QuizPageState extends State<QuizPage> {
                 const SizedBox(height: 50),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: NormalText("第一問", 10.0),
+                  child: NormalText("第一問", 20.0),
                 ),
                 Divider(thickness: 1.5),
                 SizedBox(
@@ -122,20 +132,10 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 SizedBox(height: 8.0),
-                Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          "A. 長期国債の購入による金融緩和政策",
-                          style: TextStyle(color: Colors.grey.shade900),
-                        )
-                      ],
-                    )),
+                QuizOption("A. 長期国債の購入による金融緩和政策"),
+                QuizOption("B. イールドカーブコントロール（長短金利操作、ＹＣＣ）政策を含む現行の金融緩和政策"),
+                QuizOption("C. マイナス金利政策の継続"),
+                QuizOption("D. 金融政策の修正"),
               ]),
             ),
           ),
