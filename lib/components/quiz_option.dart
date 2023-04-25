@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class QuizOption extends StatefulWidget {
   final String option_text;
+  bool _isSelected;
 
-  const QuizOption(
-    this.option_text, {
+  QuizOption(
+    this.option_text,
+    this._isSelected, {
     Key? key,
   }) : super(key: key);
 
@@ -13,14 +15,12 @@ class QuizOption extends StatefulWidget {
 }
 
 class _QuizOptionState extends State<QuizOption> {
-  bool _isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _isSelected = true;
+          widget._isSelected = true;
         });
         // Start loading here
       },
@@ -28,7 +28,7 @@ class _QuizOptionState extends State<QuizOption> {
         margin: EdgeInsets.symmetric(vertical: 5.0),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: _isSelected ? Colors.grey.shade500 : Colors.white,
+          color: widget._isSelected ? Colors.grey.shade500 : Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

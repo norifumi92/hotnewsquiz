@@ -25,6 +25,7 @@ class _QuizPageState extends State<QuizPage> {
 
   int seconds = 30;
   Timer? timer;
+  bool _isSelected = false;
 
   startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -33,6 +34,7 @@ class _QuizPageState extends State<QuizPage> {
           seconds--;
         } else {
           timer.cancel();
+          _isSelected = true;
         }
       });
     });
@@ -132,10 +134,11 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 SizedBox(height: 8.0),
-                QuizOption("A. 長期国債の購入による金融緩和政策"),
-                QuizOption("B. イールドカーブコントロール（長短金利操作、ＹＣＣ）政策を含む現行の金融緩和政策"),
-                QuizOption("C. マイナス金利政策の継続"),
-                QuizOption("D. 金融政策の修正"),
+                QuizOption("A. 長期国債の購入による金融緩和政策", _isSelected),
+                QuizOption(
+                    "B. イールドカーブコントロール（長短金利操作、ＹＣＣ）政策を含む現行の金融緩和政策", _isSelected),
+                QuizOption("C. マイナス金利政策の継続", _isSelected),
+                QuizOption("D. 金融政策の修正", _isSelected),
               ]),
             ),
           ),
