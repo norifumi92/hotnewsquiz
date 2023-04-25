@@ -68,9 +68,6 @@ class _StartAnimationPageState extends State<StartAnimationPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz Page'),
-      ),
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,

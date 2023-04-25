@@ -23,66 +23,67 @@ class HomePage extends StatelessWidget {
           colors: [Colors.purple.shade300, Colors.purple.shade900],
         )),
         child: Center(
-          child: Column(
-            children: [
-              // Container(
-              //   padding: EdgeInsets.all(8.0),
-              //   alignment: Alignment.topLeft,
-              //   child: IconButton(
-              //     onPressed: () => Navigator.of(context).pop(),
-              //     icon: Icon(
-              //       CupertinoIcons.xmark,
-              //       color: Colors.white,
-              //       size: 28,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 150),
-              Text("HOT NEWS QUIZ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                  )),
-              Text("あなたが株価に関わる世界のニュースに対し、どれだけ知識があるかをテストします。",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  )),
-              SizedBox(height: 50),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => StartAnimationPage()),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.symmetric(horizontal: 25.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "START",
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Container(
+                //   padding: EdgeInsets.all(8.0),
+                //   alignment: Alignment.topLeft,
+                //   child: IconButton(
+                //     onPressed: () => Navigator.of(context).pop(),
+                //     icon: Icon(
+                //       CupertinoIcons.xmark,
+                //       color: Colors.white,
+                //       size: 28,
+                //     ),
+                //   ),
+                // ),
+                Text("HOT NEWS QUIZ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                    )),
+                Text("あなたが株価に関わる世界のニュースに対し、どれだけ知識があるかをテストします。",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    )),
+                SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StartAnimationPage()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    margin: EdgeInsets.symmetric(horizontal: 25.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "START",
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Text("最新更新日: ${formattedDate}",
-              // style: TextStyle(
-              //   color: Colors.white,
-              //   fontSize: 12,
-              // )),
-            ],
+                // Text("最新更新日: ${formattedDate}",
+                // style: TextStyle(
+                //   color: Colors.white,
+                //   fontSize: 12,
+                // )),
+              ],
+            ),
           ),
         ),
       ),
