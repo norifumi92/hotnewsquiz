@@ -106,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
                 Divider(thickness: 1.5),
                 SizedBox(
                   width: double.infinity,
-                  height: 200,
+                  // height: 200,
                   child: Container(
                     padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
@@ -115,11 +115,27 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                     child: Column(
                       children: [
-                        Text("クイズテキストクイズテキストクイズテキストクイズテキストクイズテキストクイズテキスト"),
+                        Text(
+                            "日本銀行の植田和男新総裁が初めて臨む今週の金融政策決定会合では、どのような政策が継続されると見込まれているか。"),
                       ],
                     ),
                   ),
                 ),
+                SizedBox(height: 8.0),
+                Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          "A. 長期国債の購入による金融緩和政策",
+                          style: TextStyle(color: Colors.grey.shade900),
+                        )
+                      ],
+                    )),
               ]),
             ),
           ),
