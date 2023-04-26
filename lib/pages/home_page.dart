@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 40,
                     )),
-                Text("あなたが株価に関わる世界のニュースに対し、どれだけ知識があるかをテストします。",
+                Text("株価に関わる最新ニュースの知識をテストします。",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
