@@ -36,3 +36,10 @@ doc/api/
 
 # Ignore google-services.json
 android/app/google-services.json
+
+# Ignore config files containing API keys for firestore
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+lib/firebase_options.dart
+macos/Runner/GoogleService-Info.plist
+macos/firebase_app_id_file.json
