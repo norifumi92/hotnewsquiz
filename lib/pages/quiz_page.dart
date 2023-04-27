@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/quiz_option.dart';
+import 'package:hotnewsquiz/controllers/quiz_controller.dart';
+import 'package:get/get.dart';
+import 'package:hotnewsquiz/models/question.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -12,11 +14,25 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Question> questions = [];
+
   @override
   void initState() {
     super.initState();
-    startTimer();
+    //load quizzes from question controller. initState is called only once.
+    // _loadQuestions(); -- This does not work because initState cannot wait for the response
+
+    //delay the start of the quiz as quiz widget takes time to display.
+    Future.delayed(const Duration(seconds: 2), () {
+      startTimer();
+    });
   }
+
+  // void _loadQuestions() async {
+  //   final QuizController quizController = Get.put(QuizController());
+  //   questions = await quizController.questions;
+  //   print(questions);
+  // }
 
   void dispose() {
     timer!.cancel();
@@ -52,6 +68,8 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    // print("Number of Quiz: ${questions.length}");
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -111,34 +129,55 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: NormalText("第一問", 20.0),
-                ),
-                Divider(thickness: 1.5),
-                SizedBox(
-                  width: double.infinity,
-                  // height: 200,
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                            "日本銀行の植田和男新総裁が初めて臨む今週の金融政策決定会合では、どのような政策が継続されると見込まれているか。"),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                QuizOption("A. 長期国債の購入による金融緩和政策", _isSelected),
-                QuizOption(
-                    "B. イールドカーブコントロール（長短金利操作、ＹＣＣ）政策を含む現行の金融緩和政策", _isSelected),
-                QuizOption("C. マイナス金利政策の継続", _isSelected),
-                QuizOption("D. 金融政策の修正", _isSelected),
+                GetX<QuizController>(
+                    init: Get.put<QuizController>(QuizController()),
+                    builder: (QuizController quizController) {
+                      return Expanded(
+                        child: ListView.builder(
+                            itemCount: quizController.questions.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: NormalText("第一問", 20.0),
+                                  ),
+                                  Divider(thickness: 1.5),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    // height: 200,
+                                    child: Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(quizController
+                                              .questions[index].questionText)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  QuizOption(
+                                      quizController
+                                          .questions[index].options[0],
+                                      _isSelected),
+                                  QuizOption(
+                                      quizController
+                                          .questions[index].options[1],
+                                      _isSelected),
+                                  QuizOption(
+                                      quizController
+                                          .questions[index].options[2],
+                                      _isSelected),
+                                ],
+                              );
+                            }),
+                      );
+                    }),
               ]),
             ),
           ),
