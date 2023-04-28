@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:hotnewsquiz/components/normal_text.dart';
-import 'package:hotnewsquiz/components/quiz_option.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/question.dart';
+import 'package:hotnewsquiz/components/question_card.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -68,7 +68,8 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print("Number of Quiz: ${questions.length}");
+    // Declare a PageController variable in your state or controller
+    PageController _pageController = PageController();
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -133,46 +134,20 @@ class _QuizPageState extends State<QuizPage> {
                     init: Get.put<QuizController>(QuizController()),
                     builder: (QuizController quizController) {
                       return Expanded(
-                        child: ListView.builder(
+                        child: PageView.builder(
+                            controller: _pageController,
                             itemCount: quizController.questions.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
-                                    child: NormalText("第一問", 20.0),
+                                    child: NormalText("第${index + 1}問", 20.0),
                                   ),
                                   Divider(thickness: 1.5),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    // height: 200,
-                                    child: Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Text(quizController
-                                              .questions[index].questionText)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  QuizOption(
-                                      quizController
-                                          .questions[index].options[0],
-                                      _isSelected),
-                                  QuizOption(
-                                      quizController
-                                          .questions[index].options[1],
-                                      _isSelected),
-                                  QuizOption(
-                                      quizController
-                                          .questions[index].options[2],
-                                      _isSelected),
+                                  QuestionCard(
+                                      question: quizController.questions[index],
+                                      pageController: _pageController),
                                 ],
                               );
                             }),

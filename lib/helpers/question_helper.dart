@@ -6,7 +6,7 @@ class QuestionHelper {
     return FirebaseFirestore.instance
         .collection('quizzes')
         //Remove the following limit later.
-        .limit(1)
+        .limit(5)
         .snapshots()
         .map((query) {
       List<Question> questions = [];
