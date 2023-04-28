@@ -4,7 +4,7 @@ import 'package:hotnewsquiz/models/question.dart';
 class QuestionHelper {
   static Stream<List<Question>> questionStream() {
     return FirebaseFirestore.instance
-        .collection('quizzes')
+        .collection('quiz')
         //Remove the following limit later.
         .limit(5)
         .snapshots()

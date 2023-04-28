@@ -34,7 +34,7 @@ class _QuestionOptionState extends State<QuestionOption> {
           ),
           child: Row(children: [
             Text(
-              widget.optionText,
+              widget.optionText.trim(),
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 16,
