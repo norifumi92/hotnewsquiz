@@ -61,8 +61,8 @@ class _QuizPageState extends State<QuizPage> {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Colors.pink.shade700,
-      Colors.pink.shade200,
+      Colors.teal.shade700,
+      Colors.teal.shade200,
     ],
   );
 
