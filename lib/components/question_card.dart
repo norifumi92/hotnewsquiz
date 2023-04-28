@@ -4,11 +4,8 @@ import 'package:hotnewsquiz/models/question.dart';
 
 class QuestionCard extends StatelessWidget {
   final Question question;
-  final PageController pageController;
 
-  const QuestionCard(
-      {required this.question, required this.pageController, Key? key})
-      : super(key: key);
+  const QuestionCard({required this.question, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +22,9 @@ class QuestionCard extends StatelessWidget {
             question.questionText,
             style: TextStyle(color: Colors.black),
           ),
-          QuestionOption(question.options[0], pageController),
-          QuestionOption(question.options[1], pageController),
-          QuestionOption(question.options[2], pageController),
+          QuestionOption(question.options[0]),
+          QuestionOption(question.options[1]),
+          QuestionOption(question.options[2]),
         ],
       ),
     );

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hotnewsquiz/controllers/quiz_controller.dart';
+import 'package:get/get.dart';
 
 class QuestionOption extends StatefulWidget {
-  final String option_text;
-  final PageController pageController;
+  final String optionText;
 
-  QuestionOption(
-    this.option_text,
-    this.pageController, {
-    Key? key,
-  }) : super(key: key);
+  const QuestionOption(this.optionText);
 
   @override
   _QuestionOptionState createState() => _QuestionOptionState();
@@ -17,13 +14,12 @@ class QuestionOption extends StatefulWidget {
 class _QuestionOptionState extends State<QuestionOption> {
   @override
   Widget build(BuildContext context) {
+    QuizController quizController = Get.put<QuizController>(QuizController());
     return GestureDetector(
         onTap: () {
           // Go to the next page
-          widget.pageController.nextPage(
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeInOut,
-          );
+          quizController.nextQuestion();
+
           setState(() {
             // widget._isSelected = true;
           });
@@ -38,7 +34,7 @@ class _QuestionOptionState extends State<QuestionOption> {
           ),
           child: Row(children: [
             Text(
-              widget.option_text,
+              widget.optionText,
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 16,
