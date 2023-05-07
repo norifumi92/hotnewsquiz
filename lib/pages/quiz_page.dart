@@ -14,11 +14,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  final QuizController quizController = Get.put(QuizController());
   List<Question> questions = [];
 
   @override
   void initState() {
     super.initState();
+
     //load quizzes from question controller. initState is called only once.
     // _loadQuestions(); -- This does not work because initState cannot wait for the response
 
@@ -51,6 +53,8 @@ class _QuizPageState extends State<QuizPage> {
         } else {
           timer.cancel();
           _isSelected = true;
+          //Call timeup in QuizController
+          quizController.timeUp();
         }
       });
     });

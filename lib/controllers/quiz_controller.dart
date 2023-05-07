@@ -34,4 +34,9 @@ class QuizController extends GetxController {
       Get.to(ScorePage());
     }
   }
+
+  //define method for timeup event
+  void timeUp() {
+    Get.to(ScorePage());
+  }
 }
