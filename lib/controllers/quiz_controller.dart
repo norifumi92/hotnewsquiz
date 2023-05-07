@@ -19,7 +19,7 @@ class QuizController extends GetxController {
 
   //next question method using PageController
   void nextQuestion() {
-    int currentPageCount = _pageController.page as int;
+    int currentPageCount = _pageController.page!.toInt();
     int currentQuestionNumber = currentPageCount + 1;
     int questionCount = questionList.value.length;
 

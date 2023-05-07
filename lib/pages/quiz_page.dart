@@ -135,7 +135,7 @@ class _QuizPageState extends State<QuizPage> {
                     builder: (QuizController quizController) {
                       return Expanded(
                         child: PageView.builder(
-                            physics: const ClampingScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             controller: quizController.pageController,
                             itemCount: quizController.questions.length,
                             itemBuilder: (BuildContext context, int index) {
