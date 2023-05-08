@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/pages/quiz_page.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
+import 'package:lottie/lottie.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -78,10 +79,25 @@ class _MenuPageState extends State<MenuPage> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuizPage()),
-              );
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Lottie.asset(
+                        'assets/quiz_animation.json', // replace with your own file name
+                        width: 200,
+                        height: 200,
+                      ),
+                    );
+                  });
+
+              // Delay execution for 1 second before navigating to QuizPage
+              Future.delayed(Duration(milliseconds: 1500), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizPage()),
+                );
+              });
             },
             child: NormalText(
               menuList[index],
