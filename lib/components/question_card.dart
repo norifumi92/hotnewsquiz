@@ -21,9 +21,8 @@ class QuestionCard extends StatelessWidget {
         children: [
           NormalText(question.questionText,
               color: Colors.black, selectable: true),
-          QuestionOption(question.options[0]),
-          QuestionOption(question.options[1]),
-          QuestionOption(question.options[2]),
+          for (var i = 0; i < question.options.length; i++)
+            QuestionOption(question.options[i], i),
         ],
       ),
     );

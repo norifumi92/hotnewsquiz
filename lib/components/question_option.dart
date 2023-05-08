@@ -5,8 +5,9 @@ import 'package:hotnewsquiz/pages/quiz_page.dart';
 
 class QuestionOption extends StatefulWidget {
   final String optionText;
+  final int selectedAnswer;
 
-  const QuestionOption(this.optionText);
+  const QuestionOption(this.optionText, this.selectedAnswer);
 
   @override
   _QuestionOptionState createState() => _QuestionOptionState();
@@ -17,12 +18,15 @@ class _QuestionOptionState extends State<QuestionOption> {
 
   @override
   Widget build(BuildContext context) {
-    QuizController quizController = Get.put<QuizController>(QuizController());
+    QuizController quizController = Get.find<QuizController>();
     return GestureDetector(
         onTap: () {
           setState(() {
             _isSelected = true;
           });
+
+          //save the answer selected to quizController's list
+          quizController.selectedAnswerList.add(widget.selectedAnswer);
 
           int currentPageCount = quizController.pageController.page!.toInt();
           int currentQuestionNumber = currentPageCount + 1;

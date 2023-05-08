@@ -6,7 +6,8 @@ import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 
 class ScorePage extends StatefulWidget {
-  const ScorePage({super.key});
+  final int score;
+  const ScorePage(this.score, {super.key});
 
   @override
   State<ScorePage> createState() => _ScorePageState();
@@ -50,11 +51,11 @@ class _ScorePageState extends State<ScorePage> {
                       animation: true,
                       radius: 100,
                       lineWidth: 30,
-                      percent: 0.4,
+                      percent: widget.score / 5,
                       progressColor: Colors.teal,
                       backgroundColor: Colors.teal.shade100,
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: Text("2/5",
+                      center: Text("${widget.score}/5",
                           style: TextStyle(
                               fontSize: 50, color: Colors.grey.shade700)),
                     ),
