@@ -96,7 +96,8 @@ class QuizPageState extends State<QuizPage> {
           )),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
               child: Column(children: [
                 Container(
                   width: double.infinity,
@@ -139,7 +140,7 @@ class QuizPageState extends State<QuizPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 GetX<QuizController>(
                     init: Get.put<QuizController>(QuizController()),
                     builder: (QuizController quizController) {

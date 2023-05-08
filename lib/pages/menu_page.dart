@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/pages/quiz_page.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -14,15 +15,27 @@ class _MenuPageState extends State<MenuPage> {
   double screenWidth = 0;
   double screenHeight = 0;
   bool startAnimation = false;
-  List<String> menuList = ["今週のクイズ"];
+  bool _isButtonClicked = false;
+  List<String> menuList = ["今週のクイズ1"];
 
   @override
   void initState() {
     super.initState();
+
+    //Load the value from the shared preference of the local device
+    _loadButtonClicked();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
       });
+    });
+  }
+
+  void _loadButtonClicked() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isButtonClicked = prefs.getBool('isButtonClicked') ?? false;
     });
   }
 
@@ -45,7 +58,8 @@ class _MenuPageState extends State<MenuPage> {
         child: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
                 ListView.builder(
@@ -74,11 +88,12 @@ class _MenuPageState extends State<MenuPage> {
       margin: const EdgeInsets.only(bottom: 12.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          color: _isButtonClicked ? Colors.grey.shade300 : Colors.white,
+          borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
+          TextButton(
+            onPressed: () async {
               showDialog(
                   context: context,
                   builder: (context) {
@@ -91,7 +106,14 @@ class _MenuPageState extends State<MenuPage> {
                     );
                   });
 
-              // Delay execution for 1 second before navigating to QuizPage
+              //call shared preference and keep the fact that the button was clicked
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              setState(() {
+                _isButtonClicked = true;
+                prefs.setBool('isButtonClicked', true);
+              });
+
+              // Delay execution for 1.5 second before navigating to QuizPage
               Future.delayed(Duration(milliseconds: 1500), () {
                 Navigator.push(
                   context,
