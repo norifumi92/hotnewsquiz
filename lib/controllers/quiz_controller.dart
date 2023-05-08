@@ -19,24 +19,32 @@ class QuizController extends GetxController {
 
   //next question method using PageController
   void nextQuestion() {
-    int currentPageCount = _pageController.page!.toInt();
-    int currentQuestionNumber = currentPageCount + 1;
-    int questionCount = questionList.value.length;
-
-    print("current page: ${currentPageCount}");
-    print("question count: ${questionCount}");
-    if (currentQuestionNumber < questionCount) {
-      _pageController.nextPage(
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      Get.to(ScorePage());
-    }
+    // The following logic was moved to quiz_option.dart
+    // int currentPageCount = _pageController.page!.toInt();
+    // int currentQuestionNumber = currentPageCount + 1;
+    // int questionCount = questionList.value.length;
+    // print("current page: ${currentPageCount}");
+    // print("question count: ${questionCount}");
+    // if (currentQuestionNumber < questionCount) {
+    //   _pageController.nextPage(
+    //     duration: const Duration(seconds: 1),
+    //     curve: Curves.easeInOut,
+    //   );
+    // } else {
+    //   Future.delayed(const Duration(seconds: 2), () {
+    //     Get.to(ScorePage());
+    //   });
+    // }
+    _pageController.nextPage(
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
   }
 
   //define method for timeup event
   void timeUp() {
-    Get.to(ScorePage());
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(ScorePage());
+    });
   }
 }

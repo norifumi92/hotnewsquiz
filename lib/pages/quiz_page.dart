@@ -10,10 +10,10 @@ class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
 
   @override
-  State<QuizPage> createState() => _QuizPageState();
+  State<QuizPage> createState() => QuizPageState();
 }
 
-class _QuizPageState extends State<QuizPage> {
+class QuizPageState extends State<QuizPage> {
   final QuizController quizController = Get.put(QuizController());
   List<Question> questions = [];
 
@@ -25,7 +25,7 @@ class _QuizPageState extends State<QuizPage> {
     // _loadQuestions(); -- This does not work because initState cannot wait for the response
 
     //delay the start of the quiz as quiz widget takes time to display.
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       startTimer();
     });
   }
@@ -45,9 +45,10 @@ class _QuizPageState extends State<QuizPage> {
   Timer? timer;
   bool _isSelected = false;
 
-  startTimer() {
+  void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
+        print(seconds);
         if (seconds > 0) {
           seconds--;
         } else {
@@ -57,6 +58,14 @@ class _QuizPageState extends State<QuizPage> {
           quizController.timeUp();
         }
       });
+    });
+  }
+
+  void resetTimer() {
+    setState(() {
+      seconds = 30; // replace 30 with your initial value
+      timer?.cancel(); // cancel the current timer if it exists
+      _isSelected = false; // reset _isSelected flag if needed
     });
   }
 
@@ -72,9 +81,6 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Declare a PageController variable in your state or controller
-    PageController _pageController = PageController();
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
