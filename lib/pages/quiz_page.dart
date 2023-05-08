@@ -133,7 +133,7 @@ class QuizPageState extends State<QuizPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [NormalText("残り${seconds}秒", 12)],
+                          children: [NormalText("残り${seconds}秒", size: 12)],
                         ),
                       ))
                     ],
@@ -152,10 +152,11 @@ class QuizPageState extends State<QuizPage> {
                               return Column(
                                 children: [
                                   Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: NormalText("第${index + 1}問", 20.0),
+                                    alignment: Alignment.center,
+                                    child: NormalText("第${index + 1}問"),
                                   ),
-                                  Divider(thickness: 1.5),
+                                  const Divider(thickness: 1.5),
+                                  const SizedBox(height: 10),
                                   QuestionCard(
                                       question:
                                           quizController.questions[index]),

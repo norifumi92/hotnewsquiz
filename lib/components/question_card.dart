@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/question_option.dart';
 import 'package:hotnewsquiz/models/question.dart';
 
@@ -18,10 +19,8 @@ class QuestionCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            question.questionText,
-            style: TextStyle(color: Colors.black),
-          ),
+          NormalText(question.questionText,
+              color: Colors.black, selectable: true),
           QuestionOption(question.options[0]),
           QuestionOption(question.options[1]),
           QuestionOption(question.options[2]),

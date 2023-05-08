@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hotnewsquiz/pages/home_page.dart';
+import 'package:hotnewsquiz/pages/menu_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
+import 'package:hotnewsquiz/components/normal_text.dart';
 
 class ScorePage extends StatefulWidget {
   const ScorePage({super.key});
@@ -67,30 +68,29 @@ class _ScorePageState extends State<ScorePage> {
                       // Create a new instance of QuizController and add it to the GetX dependency injection system
                       Get.put(QuizController());
 
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomePage()),
+                            builder: (context) => const MenuPage()),
                       );
                     },
-                    child: Text("解答を確認する",
-                        style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: 20)),
+                    child: NormalText("解答を確認する", color: Colors.grey.shade700),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 15),
-            GestureDetector(
-              onTap: () {
+            TextButton(
+              onPressed: () {
                 // Delete the existing instance of QuizController
                 Get.delete<QuizController>();
                 // Create a new instance of QuizController and add it to the GetX dependency injection system
                 Get.put(QuizController());
 
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => const MenuPage()),
+                  (route) => false,
                 );
               },
               child: Container(
@@ -101,17 +101,40 @@ class _ScorePageState extends State<ScorePage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
-                  child: Text(
+                  child: NormalText(
                     "メニューに戻る",
-                    style: TextStyle(
-                      color: Colors.purple,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                    color: Colors.purple,
                   ),
                 ),
               ),
-            ),
+            )
+            // GestureDetector(
+            // onTap: () {
+            //   // Delete the existing instance of QuizController
+            //   Get.delete<QuizController>();
+            //   // Create a new instance of QuizController and add it to the GetX dependency injection system
+            //   Get.put(QuizController());
+
+            //   Navigator.pushAndRemoveUntil(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => const MenuPage()),
+            //     (route) => false,
+            //   );
+            // },
+            // child: Container(
+            //   padding: EdgeInsets.all(8.0),
+            //   margin: EdgeInsets.symmetric(horizontal: 20.0),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(8),
+            //   ),
+            //   child: Center(
+            //     child: NormalText(
+            //       "メニューに戻る",
+            //       color: Colors.purple,
+            //     ),
+            //   ),
+            // ),
           ],
         )),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'start_animation_page.dart';
-// import 'package:intl/intl.dart';
-// import 'package:cupertino_icons/cupertino_icons.dart';
+// import 'start_animation_page.dart';
+import 'menu_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -55,7 +54,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => StartAnimationPage()),
+                          //builder: (context) => StartAnimationPage()),
+                          builder: (context) => MenuPage()),
                     );
                   },
                   child: Container(
