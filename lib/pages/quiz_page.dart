@@ -48,7 +48,7 @@ class QuizPageState extends State<QuizPage> {
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        print(seconds);
+        // print(seconds);
         if (seconds > 0) {
           seconds--;
         } else {

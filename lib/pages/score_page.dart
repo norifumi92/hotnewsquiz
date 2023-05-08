@@ -26,56 +26,94 @@ class _ScorePageState extends State<ScorePage> {
           colors: [Colors.purple.shade300, Colors.purple.shade900],
         )),
         child: Align(
-          child: Container(
-            padding: const EdgeInsets.all(8.0),
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            height: 400,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
             child: Column(
-              children: [
-                const SizedBox(height: 25),
-                Text("あなたのスコア",
-                    style:
-                        TextStyle(color: Colors.grey.shade700, fontSize: 25)),
-                const SizedBox(height: 25),
-                Center(
-                  child: CircularPercentIndicator(
-                    animation: true,
-                    radius: 100,
-                    lineWidth: 30,
-                    percent: 0.4,
-                    progressColor: Colors.teal,
-                    backgroundColor: Colors.teal.shade100,
-                    circularStrokeCap: CircularStrokeCap.round,
-                    center: Text("2/5",
+          children: [
+            Container(
+              padding: const EdgeInsets.only(
+                  top: 8.0, bottom: 3.0, left: 8.0, right: 8.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              height: 400,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 25),
+                  Text("あなたのスコア",
+                      style:
+                          TextStyle(color: Colors.grey.shade700, fontSize: 25)),
+                  const SizedBox(height: 25),
+                  Center(
+                    child: CircularPercentIndicator(
+                      animation: true,
+                      radius: 100,
+                      lineWidth: 30,
+                      percent: 0.4,
+                      progressColor: Colors.teal,
+                      backgroundColor: Colors.teal.shade100,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      center: Text("2/5",
+                          style: TextStyle(
+                              fontSize: 50, color: Colors.grey.shade700)),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  // const Divider(thickness: 1.5),
+                  GestureDetector(
+                    onTap: () {
+                      // Delete the existing instance of QuizController
+                      Get.delete<QuizController>();
+                      // Create a new instance of QuizController and add it to the GetX dependency injection system
+                      Get.put(QuizController());
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
+                      );
+                    },
+                    child: Text("解答を確認する",
                         style: TextStyle(
-                            fontSize: 50, color: Colors.grey.shade700)),
+                            color: Colors.grey.shade700, fontSize: 20)),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 15),
+            GestureDetector(
+              onTap: () {
+                // Delete the existing instance of QuizController
+                Get.delete<QuizController>();
+                // Create a new instance of QuizController and add it to the GetX dependency injection system
+                Get.put(QuizController());
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    "メニューに戻る",
+                    style: TextStyle(
+                      color: Colors.purple,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 25),
-                GestureDetector(
-                  onTap: () {
-                    // Delete the existing instance of QuizController
-                    Get.delete<QuizController>();
-                    // Create a new instance of QuizController and add it to the GetX dependency injection system
-                    Get.put(QuizController());
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
-                  child: Text("メニューに戻る",
-                      style:
-                          TextStyle(color: Colors.grey.shade700, fontSize: 20)),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          ],
+        )),
       ),
     );
   }
