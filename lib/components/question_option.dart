@@ -13,11 +13,17 @@ class QuestionOption extends StatefulWidget {
 }
 
 class _QuestionOptionState extends State<QuestionOption> {
+  bool _isSelected = false;
+
   @override
   Widget build(BuildContext context) {
     QuizController quizController = Get.put<QuizController>(QuizController());
     return GestureDetector(
         onTap: () {
+          setState(() {
+            _isSelected = true;
+          });
+
           int currentPageCount = quizController.pageController.page!.toInt();
           int currentQuestionNumber = currentPageCount + 1;
           int questionCount = quizController.questionList.value.length;
@@ -44,11 +50,6 @@ class _QuestionOptionState extends State<QuestionOption> {
 
             quizController.timeUp();
           }
-
-          setState(() {
-            // widget._isSelected = true;
-          });
-          // Start loading here
         },
         child: Container(
           margin: const EdgeInsets.only(top: 10.0),
@@ -56,6 +57,7 @@ class _QuestionOptionState extends State<QuestionOption> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(15),
+            color: _isSelected ? Colors.purple.shade700 : Colors.white,
           ),
           child: Row(children: [
             Text(
