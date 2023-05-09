@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/question.dart';
-import 'package:hotnewsquiz/helpers/question_helper.dart';
+import 'package:hotnewsquiz/helpers/quiz_helper.dart';
+import 'package:hotnewsquiz/models/quiz.dart';
 import 'package:hotnewsquiz/pages/score_page.dart';
 
 class QuizController extends GetxController {
+  //Define questionList and its getter
   Rx<List<Question>> questionList = Rx<List<Question>>([]);
   List<Question> get questions => questionList.value;
+
+  //Define quizList and its getter
+  Rx<List<Quiz>> quizList = Rx<List<Quiz>>([]);
+  List<Quiz> get quizzes => quizList.value;
 
   //Store the list of user's answers
   var selectedAnswerList = [].obs;
@@ -20,8 +26,11 @@ class QuizController extends GetxController {
 
   @override
   void onReady() {
-    questionList.bindStream(QuestionHelper.questionStream());
+    questionList.bindStream(QuizHelper.questionStream());
+    quizList.bindStream(QuizHelper.quizListStream());
   }
+
+  //pick up quizzes to display
 
   //next question method using PageController
   void nextQuestion() {

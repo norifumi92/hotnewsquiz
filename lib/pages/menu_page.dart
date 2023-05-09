@@ -3,6 +3,9 @@ import 'package:hotnewsquiz/pages/quiz_page.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hotnewsquiz/controllers/quiz_controller.dart';
+import 'package:get/get.dart';
+import 'package:hotnewsquiz/models/quiz.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -16,7 +19,10 @@ class _MenuPageState extends State<MenuPage> {
   double screenHeight = 0;
   bool startAnimation = false;
   bool _isButtonClicked = false;
-  List<String> menuList = ["今週のクイズ1"];
+
+  //Call quiz controller
+  final QuizController quizController = Get.put(QuizController());
+  List<String> quizList = [];
 
   @override
   void initState() {
@@ -62,13 +68,20 @@ class _MenuPageState extends State<MenuPage> {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
-                ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: menuList.length,
-                    itemBuilder: (context, index) {
-                      return item(index);
-                    }),
+                // Get the list of quizzes in the same mannar that questions are taken
+                GetX<QuizController>(
+                  init: Get.put<QuizController>(QuizController()),
+                  builder: (QuizController quizController) {
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: quizController.quizzes.length,
+                      itemBuilder: (context, index) {
+                        return item(quizController.quizzes[index], index);
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -77,7 +90,7 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget item(int index) {
+  Widget item(Quiz quiz, int index) {
     return AnimatedContainer(
       height: 55,
       width: screenWidth,
@@ -100,8 +113,8 @@ class _MenuPageState extends State<MenuPage> {
                     return Center(
                       child: Lottie.asset(
                         'assets/quiz_animation.json', // replace with your own file name
-                        width: 200,
-                        height: 200,
+                        width: 300,
+                        height: 300,
                       ),
                     );
                   });
@@ -117,12 +130,12 @@ class _MenuPageState extends State<MenuPage> {
               Future.delayed(Duration(milliseconds: 1500), () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => QuizPage()),
+                  MaterialPageRoute(builder: (context) => QuizPage(quiz)),
                 );
               });
             },
             child: NormalText(
-              menuList[index],
+              quiz.quizText,
               color: Colors.grey.shade700,
             ),
           )

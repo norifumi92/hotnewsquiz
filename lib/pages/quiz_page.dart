@@ -5,9 +5,11 @@ import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/question.dart';
 import 'package:hotnewsquiz/components/question_card.dart';
+import 'package:hotnewsquiz/models/quiz.dart';
 
 class QuizPage extends StatefulWidget {
-  const QuizPage({super.key});
+  final Quiz quiz;
+  const QuizPage(this.quiz, {super.key});
 
   @override
   State<QuizPage> createState() => QuizPageState();
