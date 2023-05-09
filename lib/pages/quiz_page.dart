@@ -150,7 +150,9 @@ class QuizPageState extends State<QuizPage> {
                         child: PageView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             controller: quizController.pageController,
-                            itemCount: quizController.questions.length,
+                            itemCount: quizController
+                                .pickUpQuestions(widget.quiz.quizKey)
+                                .length,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
@@ -161,8 +163,8 @@ class QuizPageState extends State<QuizPage> {
                                   const Divider(thickness: 1.5),
                                   const SizedBox(height: 10),
                                   QuestionCard(
-                                      question:
-                                          quizController.questions[index]),
+                                      question: quizController.pickUpQuestions(
+                                          widget.quiz.quizKey)[index]),
                                 ],
                               );
                             }),

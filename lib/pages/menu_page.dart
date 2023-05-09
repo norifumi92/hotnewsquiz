@@ -135,7 +135,7 @@ class _MenuPageState extends State<MenuPage> {
               });
             },
             child: NormalText(
-              quiz.quizText,
+              "クイズ(${quiz.quizText})",
               color: Colors.grey.shade700,
             ),
           )

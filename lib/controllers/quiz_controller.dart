@@ -30,7 +30,18 @@ class QuizController extends GetxController {
     quizList.bindStream(QuizHelper.quizListStream());
   }
 
-  //pick up quizzes to display
+  //pick up questions to display
+  List<Question> pickUpQuestions(quizKey) {
+    //convert quizKey to match it with published date of Questions
+    String formattedQuizKey =
+        "${quizKey.substring(0, 4)}-${quizKey.substring(4, 6)}-${quizKey.substring(6, 8)}";
+
+    List<Question> pickedQuestions = questionList.value
+        .where((question) => question.publishedDate == formattedQuizKey)
+        .toList();
+
+    return pickedQuestions;
+  }
 
   //next question method using PageController
   void nextQuestion() {

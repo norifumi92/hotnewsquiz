@@ -30,7 +30,9 @@ class _QuestionOptionState extends State<QuestionOption> {
 
           int currentPageCount = quizController.pageController.page!.toInt();
           int currentQuestionNumber = currentPageCount + 1;
-          int questionCount = quizController.questionList.value.length;
+
+          //for now, hardcode the question count
+          const int questionCount = 5;
 
           //if this is not the last question, go to the next question
           if (currentQuestionNumber < questionCount) {
