@@ -32,7 +32,7 @@ class _ScorePageState extends State<ScorePage> {
           children: [
             Container(
               padding: const EdgeInsets.only(
-                  top: 8.0, bottom: 3.0, left: 8.0, right: 8.0),
+                  top: 20.0, bottom: 3.0, left: 8.0, right: 8.0),
               margin: const EdgeInsets.symmetric(horizontal: 20),
               height: 400,
               decoration: BoxDecoration(
@@ -42,7 +42,7 @@ class _ScorePageState extends State<ScorePage> {
               child: Column(
                 children: [
                   const SizedBox(height: 25),
-                  Text("あなたのスコア",
+                  Text("結果",
                       style:
                           TextStyle(color: Colors.grey.shade700, fontSize: 25)),
                   const SizedBox(height: 25),
