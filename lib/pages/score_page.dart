@@ -32,20 +32,20 @@ class _ScorePageState extends State<ScorePage> {
           children: [
             Container(
               padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 3.0, left: 8.0, right: 8.0),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 400,
+                  top: 8.0, bottom: 3.0, left: 8.0, right: 8.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              height: 380,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
                   Text("結果",
                       style:
                           TextStyle(color: Colors.grey.shade700, fontSize: 25)),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 15),
                   Center(
                     child: CircularPercentIndicator(
                       animation: true,
@@ -60,7 +60,7 @@ class _ScorePageState extends State<ScorePage> {
                               fontSize: 50, color: Colors.grey.shade700)),
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 30),
                   // const Divider(thickness: 1.5),
                   GestureDetector(
                     onTap: () {
