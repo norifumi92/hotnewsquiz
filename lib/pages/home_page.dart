@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 // import 'start_animation_page.dart';
 import 'menu_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'intro_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  //Define variable to check the intro button was pressed.
+  bool _isIntroButtonClicked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    //Load from the shared preference of the local device _isIntroButtonClicked
+    _loadIntroButtonClicked();
+  }
+
+  void _loadIntroButtonClicked() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isIntroButtonClicked = prefs.getBool('isIntroButtonClicked') ?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
-    // String formattedDate = DateFormat('yyyy/MM/dd').format(currentDate);
 
     return Scaffold(
       body: Container(
@@ -55,7 +78,8 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           //builder: (context) => StartAnimationPage()),
-                          builder: (context) => MenuPage()),
+                          builder: (context) =>
+                              _isIntroButtonClicked ? MenuPage() : IntroPage()),
                     );
                   },
                   child: Container(
