@@ -65,15 +65,20 @@ class _QuestionOptionState extends State<QuestionOption> {
             borderRadius: BorderRadius.circular(15),
             color: _isSelected ? Colors.purple.shade700 : Colors.white,
           ),
-          child: Row(children: [
-            Text(
-              widget.optionText.trim(),
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 16,
+          child: Row(
+            children: [
+              Flexible(
+                child: Text(
+                  widget.optionText.trim(),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                  overflow: TextOverflow.clip, // Set overflow to clip
+                ),
               ),
-            )
-          ]),
+            ],
+          ),
         ));
   }
 }
