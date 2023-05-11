@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
 
   void _loadIntroButtonClicked() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getBool('isIntroButtonClicked'));
     setState(() {
       _isIntroButtonClicked = prefs.getBool('isIntroButtonClicked') ?? false;
     });

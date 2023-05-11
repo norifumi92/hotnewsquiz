@@ -10,9 +10,17 @@ class QuizController extends GetxController {
   Rx<List<Question>> questionList = Rx<List<Question>>([]);
   List<Question> get questions => questionList.value;
 
+  //Define pickedQuestionList and its getter
+  Rx<List<Question>> pickedQuestionList = Rx<List<Question>>([]);
+  List<Question> get pickedQuestions => pickedQuestionList.value;
+
   //Define quizList and its getter
   Rx<List<Quiz>> quizList = Rx<List<Quiz>>([]);
   List<Quiz> get quizzes => quizList.value;
+
+  //Define score and its getter
+  RxInt rxScore = RxInt(0);
+  int get score => rxScore.value;
 
   //Store the list of user's answers
   var selectedAnswerList = [].obs;
@@ -31,7 +39,7 @@ class QuizController extends GetxController {
   }
 
   //pick up questions to display
-  List<Question> pickUpQuestions(quizKey) {
+  void pickUpQuestions(quizKey) {
     //convert quizKey to match it with published date of Questions
     String formattedQuizKey =
         "${quizKey.substring(0, 4)}-${quizKey.substring(4, 6)}-${quizKey.substring(6, 8)}";
@@ -40,7 +48,8 @@ class QuizController extends GetxController {
         .where((question) => question.publishedDate == formattedQuizKey)
         .toList();
 
-    return pickedQuestions;
+    //Update pickedQuestionList
+    pickedQuestionList.value = pickedQuestions;
   }
 
   //next question method using PageController
@@ -71,7 +80,9 @@ class QuizController extends GetxController {
   void timeUp() {
     Future.delayed(const Duration(seconds: 2), () {
       int score = calculateScore();
-      Get.to(ScorePage(score));
+      rxScore.value = score;
+      // Page transition should happen using Navigator but Get.to so the controller will not be destroyed
+      Get.to(ScorePage());
     });
   }
 

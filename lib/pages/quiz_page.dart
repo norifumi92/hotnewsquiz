@@ -58,6 +58,14 @@ class QuizPageState extends State<QuizPage> {
           _isSelected = true;
           //Call timeup in QuizController
           quizController.timeUp();
+
+          // move to score page
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       //builder: (context) => StartAnimationPage()),
+          //       builder: (context) => const ScorePage()),
+          // );
         }
       });
     });
@@ -144,15 +152,13 @@ class QuizPageState extends State<QuizPage> {
                 ),
                 const SizedBox(height: 25),
                 GetX<QuizController>(
-                    init: Get.put<QuizController>(QuizController()),
+                    init: Get.find<QuizController>(),
                     builder: (QuizController quizController) {
                       return Expanded(
                         child: PageView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             controller: quizController.pageController,
-                            itemCount: quizController
-                                .pickUpQuestions(widget.quiz.quizKey)
-                                .length,
+                            itemCount: quizController.pickedQuestions.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
@@ -163,8 +169,8 @@ class QuizPageState extends State<QuizPage> {
                                   const Divider(thickness: 1.5),
                                   const SizedBox(height: 10),
                                   QuestionCard(
-                                      question: quizController.pickUpQuestions(
-                                          widget.quiz.quizKey)[index]),
+                                      question: quizController
+                                          .pickedQuestions[index]),
                                 ],
                               );
                             }),

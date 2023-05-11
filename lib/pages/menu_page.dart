@@ -115,6 +115,9 @@ class _MenuPageState extends State<MenuPage> {
               //   prefs.setBool('isButtonClicked', true);
               // });
 
+              //updated picked question list in quizcontroller
+              quizController.pickUpQuestions(quiz.quizKey);
+
               // Delay execution for 1.5 second before navigating to QuizPage
               Future.delayed(Duration(milliseconds: 1500), () {
                 Navigator.push(

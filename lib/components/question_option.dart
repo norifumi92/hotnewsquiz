@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/pages/quiz_page.dart';
+import 'package:hotnewsquiz/pages/score_page.dart';
 
 class QuestionOption extends StatefulWidget {
   final String optionText;
@@ -55,6 +56,17 @@ class _QuestionOptionState extends State<QuestionOption> {
             _quizPageState?.resetTimer();
 
             quizController.timeUp();
+
+            // pop the loading circle
+            // Navigator.pop(context);
+
+            // move to score page
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //       //builder: (context) => StartAnimationPage()),
+            //       builder: (context) => const ScorePage()),
+            // );
           }
         },
         child: Container(
