@@ -29,6 +29,12 @@ class AnswerPage extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
+                Center(
+                    child: NormalText(
+                  '解答',
+                  size: 25,
+                )),
+                Divider(height: 10),
                 GetX<QuizController>(
                   init: Get.find<QuizController>(),
                   builder: (QuizController quizController) {

@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/quiz.dart';
+import 'ad_test_page.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -70,6 +71,14 @@ class _MenuPageState extends State<MenuPage> {
                     );
                   },
                 ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => AdTestPage())));
+                    },
+                    child: const Text("Interstital Ad Test")),
               ],
             ),
           ),

@@ -48,7 +48,7 @@ android {
         applicationId "com.norifumi.hotnewsquiz"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 19 //cloud_firestore needs the version above 19
+        minSdkVersion 21 //cloud_firestore needs the version above 19. For admod, it needs to be version 21 or above.
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
