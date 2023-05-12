@@ -47,11 +47,17 @@ class _AdTestPageState extends State<AdTestPage> {
         request: AdRequest(),
         rewardedAdLoadCallback:
             RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
-          _rewardedAd = ad;
-          _setFullScreenContentCallback();
+          setState(() {
+            _rewardedAd = ad;
+            isAdLoaded = true; // Set the flag to indicate the ad is loaded
+            _setFullScreenContentCallback();
+          });
         }, onAdFailedToLoad: ((error) {
-          _rewardedAd = null;
-          debugPrint(error.message);
+          setState(() {
+            _rewardedAd = null;
+            _interstitialAd = null;
+            debugPrint(error.message);
+          });
         })));
   }
 
@@ -64,6 +70,14 @@ class _AdTestPageState extends State<AdTestPage> {
         print("$ad onAdDismissedFullScreenContent");
         //dispose the dismissed ad
         ad.dispose();
+
+        //reset the ad
+        setState(() {
+          _rewardedAd =
+              null; // Set the ad reference to null after it's dismissed
+          isAdLoaded =
+              false; // Set the flag to indicate the ad is no longer loaded
+        });
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
         print("$ad onAdFailedToShowFullScreenContent: $error");
@@ -88,7 +102,7 @@ class _AdTestPageState extends State<AdTestPage> {
               //       "Interstitial ad not loaded yet"); // Handle the case where the ad is not loaded
               // }
 
-              if (_rewardedAd != null) {
+              if (isAdLoaded) {
                 _rewardedAd!.show(onUserEarnedReward:
                     (AdWithoutView ad, RewardItem rewardItem) {
                   //reward for watching the ad
@@ -99,6 +113,8 @@ class _AdTestPageState extends State<AdTestPage> {
                 print(
                     "RewardedAd not loaded yet"); // Handle the case where the ad is not loaded
               }
+              //By initializing ad again, upon the next click, the ad is played.
+              initRewardedAd();
             },
             child: const Text("Task Completed")),
       ),
