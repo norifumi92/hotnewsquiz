@@ -4,17 +4,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hotnewsquiz/pages/score_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  MobileAds.instance.initialize();
 
-  RequestConfiguration configuration =
-      RequestConfiguration(testDeviceIds: ["3AC45BF3BACE609A7F26FA203604F81F"]);
-  MobileAds.instance.updateRequestConfiguration(configuration);
+  //Load MobileAds only for Android/iOS
+  if (!kIsWeb) {
+    MobileAds.instance.initialize();
+
+    RequestConfiguration configuration = RequestConfiguration(
+        testDeviceIds: ["3AC45BF3BACE609A7F26FA203604F81F"]);
+    MobileAds.instance.updateRequestConfiguration(configuration);
+  }
   runApp(const MyApp());
 }
 
@@ -30,7 +36,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black87,
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple),
       ),
-      home: HomePage(),
+      routes: {
+        "/": (context) => HomePage(),
+        "/ScorePage": (context) => ScorePage(),
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hotnewsquiz/pages/answer_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:get/get.dart';
-import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/go_back_to_menu.dart';
+import 'ad_test_page.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hotnewsquiz/pages/answer_page.dart';
 
 class ScorePage extends StatefulWidget {
   final int score;
@@ -63,20 +63,52 @@ class _ScorePageState extends State<ScorePage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () {
-                      // Delete the existing instance of QuizController
-                      // Get.delete<QuizController>();
-                      // Create a new instance of QuizController and add it to the GetX dependency injection system
-                      // Get.put(QuizController());
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AnswerPage()),
+                  ElevatedButton(
+                    onPressed: () {
+                      //Show a dialog to notice the user about the rewarded ad in advance
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('動画広告のお知らせ'),
+                            content: Text(
+                                'このアプリでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
+                            actions: [
+                              ElevatedButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  // For mobile, play the ad
+                                  if (!kIsWeb) {
+                                    Navigator.of(context).pop();
+                                  }
+                                  // For browser, skip the ad
+                                  else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                AnswerPage())));
+                                  }
+                                },
+                              ),
+                              ElevatedButton(
+                                child: Text('戻る'),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
                       );
+                      //   //Only when the device is mobile, show the ad
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: ((context) => AdTestPage())));
                     },
-                    child: NormalText("解答を確認する", color: Colors.grey.shade700),
+                    child: const NormalText("解答をチェック"),
                   ),
                 ],
               ),
