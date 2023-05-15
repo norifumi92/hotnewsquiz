@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/go_back_to_menu.dart';
 import 'ad_test_page.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hotnewsquiz/pages/answer_page.dart';
+import 'package:hotnewsquiz/controllers/quiz_controller.dart';
+import 'package:get/get.dart';
 
 class ScorePage extends StatefulWidget {
-  final int score;
-  const ScorePage({this.score = 0, super.key});
+  const ScorePage({super.key});
 
   @override
   State<ScorePage> createState() => _ScorePageState();
@@ -17,11 +19,15 @@ class ScorePage extends StatefulWidget {
 class _ScorePageState extends State<ScorePage> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    final quizController = Get.find<QuizController>();
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
             gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -35,7 +41,7 @@ class _ScorePageState extends State<ScorePage> {
               padding: const EdgeInsets.only(
                   top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
               margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
-              height: 380,
+              height: screenHeight * 0.7,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -53,11 +59,11 @@ class _ScorePageState extends State<ScorePage> {
                       animation: true,
                       radius: 100,
                       lineWidth: 30,
-                      percent: widget.score / 5,
+                      percent: quizController.score / 5,
                       progressColor: Colors.teal,
                       backgroundColor: Colors.teal.shade100,
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: Text("${widget.score}/5",
+                      center: Text("${quizController.score}/5",
                           style: TextStyle(
                               fontSize: 50, color: Colors.grey.shade700)),
                     ),
