@@ -11,26 +11,42 @@ class AnswerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          //Question Text
-          Container(
-            width: screenWidth * 0.8,
-            color: Colors.white,
-            child: NormalText(question.questionText,
-                color: Colors.black, selectable: true),
-          ),
-          //Options
-          for (var i = 0; i < question.options.length; i++)
-            AnswerOption(question.options[i], i),
-        ],
+    return GestureDetector(
+      onTap: () {
+        if (question.summary != null) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('${question.publishedDate} 解説'),
+                  content: SingleChildScrollView(
+                    child: Text(question.summary.toString()),
+                  ),
+                );
+              });
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            //Question Text
+            Container(
+              width: screenWidth * 0.8,
+              color: Colors.white,
+              child: NormalText(question.questionText,
+                  color: Colors.black, selectable: true),
+            ),
+            //Options
+            for (var i = 0; i < question.options.length; i++)
+              AnswerOption(question.options[i], i),
+          ],
+        ),
       ),
     );
   }
