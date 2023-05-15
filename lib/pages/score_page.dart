@@ -115,7 +115,7 @@ class _ScorePageState extends State<ScorePage> {
               padding: const EdgeInsets.only(
                   top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
               margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
-              height: screenHeight * 0.7,
+              height: screenHeight * 0.6,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -150,9 +150,9 @@ class _ScorePageState extends State<ScorePage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('動画広告のお知らせ'),
+                            title: Text('動画広告について'),
                             content: Text(
-                                'このアプリでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
+                                'Hot News Quizでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
                             actions: [
                               ElevatedButton(
                                   child: const Text('OK'),
@@ -166,7 +166,6 @@ class _ScorePageState extends State<ScorePage> {
                                           setState(() {
                                             //reward for watching the ad
                                             amount = rewardItem.amount;
-                                            print("You earned $amount");
                                           });
                                           Get.to(AnswerPage());
                                           ;
@@ -195,11 +194,6 @@ class _ScorePageState extends State<ScorePage> {
                     },
                     child: const NormalText("解答をチェック"),
                   )
-                  //   //Only when the device is mobile, show the ad
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: ((context) => AdTestPage())));
                 ],
               ),
             ),

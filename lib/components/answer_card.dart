@@ -20,7 +20,8 @@ class AnswerCard extends StatelessWidget {
                 return AlertDialog(
                   title: Text('${question.publishedDate} 解説'),
                   content: SingleChildScrollView(
-                    child: Text(question.summary.toString()),
+                    child: NormalText(question.summary.toString(),
+                        color: Colors.black, selectable: true, size: 18),
                   ),
                 );
               });
@@ -40,11 +41,15 @@ class AnswerCard extends StatelessWidget {
               width: screenWidth * 0.8,
               color: Colors.white,
               child: NormalText(question.questionText,
-                  color: Colors.black, selectable: true),
+                  color: Colors.black, selectable: false),
             ),
             //Options
             for (var i = 0; i < question.options.length; i++)
-              AnswerOption(question.options[i], i),
+              AnswerOption(
+                question.options[i],
+                optionIndex: i,
+                trueAnswer: 0, //TODO: replace this with true answer
+              ),
           ],
         ),
       ),
