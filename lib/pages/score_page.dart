@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hotnewsquiz/pages/answer_page.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class ScorePage extends StatefulWidget {
   const ScorePage({super.key});
@@ -17,6 +18,79 @@ class ScorePage extends StatefulWidget {
 }
 
 class _ScorePageState extends State<ScorePage> {
+  //rewarded ad config
+  bool isAdLoaded = false;
+  final String rewardedAdUnit = "ca-app-pub-3940256099942544/5224354917";
+  RewardedAd? _rewardedAd;
+  num amount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    //call RewardedAd load
+    if (!kIsWeb) {
+      loadRewardedAd();
+    }
+  }
+
+  @override
+  void dispose() {
+    try {
+      _rewardedAd!.dispose();
+    } catch (e) {
+      // Exception handling code
+      print('Exception caught: $e');
+    }
+    super.dispose();
+  }
+
+  //RewardedAd Load
+  void loadRewardedAd() {
+    RewardedAd.load(
+        adUnitId: rewardedAdUnit,
+        request: AdRequest(),
+        rewardedAdLoadCallback:
+            RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
+          setState(() {
+            _rewardedAd = ad;
+            isAdLoaded = true; // Set the flag to indicate the ad is loaded
+            _setFullScreenContentCallback();
+          });
+        }, onAdFailedToLoad: ((error) {
+          setState(() {
+            _rewardedAd = null;
+            debugPrint(error.message);
+          });
+        })));
+  }
+
+  void _setFullScreenContentCallback() {
+    if (_rewardedAd == null) return;
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print("$ad onShowedFullScreenContent"),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print("$ad onAdDismissedFullScreenContent");
+        //dispose the dismissed ad
+        ad.dispose();
+
+        //reset the ad
+        setState(() {
+          _rewardedAd =
+              null; // Set the ad reference to null after it's dismissed
+          isAdLoaded =
+              false; // Set the flag to indicate the ad is no longer loaded
+        });
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        print("$ad onAdFailedToShowFullScreenContent: $error");
+        //dispose the dismissed ad
+        ad.dispose();
+      },
+      onAdImpression: (RewardedAd ad) => print("$ad Impression occured"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -81,22 +155,32 @@ class _ScorePageState extends State<ScorePage> {
                                 'このアプリでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
                             actions: [
                               ElevatedButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  // For mobile, play the ad
-                                  if (!kIsWeb) {
-                                    Navigator.of(context).pop();
-                                  }
-                                  // For browser, skip the ad
-                                  else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                AnswerPage())));
-                                  }
-                                },
-                              ),
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    // For mobile, play the ad
+                                    if (!kIsWeb) {
+                                      if (isAdLoaded) {
+                                        _rewardedAd!.show(onUserEarnedReward:
+                                            (AdWithoutView ad,
+                                                RewardItem rewardItem) {
+                                          setState(() {
+                                            //reward for watching the ad
+                                            amount = rewardItem.amount;
+                                            print("You earned $amount");
+                                          });
+                                          Get.to(AnswerPage());
+                                          ;
+                                        }); // Show the rewarded ad if it's not null
+                                      } else {
+                                        print(
+                                            "RewardedAd not loaded yet"); // Handle the case where the ad is not loaded
+                                      }
+                                    }
+                                    // For browser, skip the ad
+                                    else {
+                                      Get.to(AnswerPage());
+                                    }
+                                  }),
                               ElevatedButton(
                                 child: Text('戻る'),
                                 onPressed: () {
@@ -108,14 +192,14 @@ class _ScorePageState extends State<ScorePage> {
                           );
                         },
                       );
-                      //   //Only when the device is mobile, show the ad
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: ((context) => AdTestPage())));
                     },
                     child: const NormalText("解答をチェック"),
-                  ),
+                  )
+                  //   //Only when the device is mobile, show the ad
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: ((context) => AdTestPage())));
                 ],
               ),
             ),

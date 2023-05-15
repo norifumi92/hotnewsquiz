@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hotnewsquiz/pages/score_page.dart';
+import 'package:hotnewsquiz/pages/answer_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => HomePage(),
         "/ScorePage": (context) => ScorePage(),
+        "/AnswerPage": (context) => AnswerPage(),
       },
     );
   }
