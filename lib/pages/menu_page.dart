@@ -56,6 +56,14 @@ class _MenuPageState extends State<MenuPage> {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
+                const Center(
+                    child: NormalText(
+                  "クイズリスト",
+                  size: 25,
+                  isBold: true,
+                  color: Colors.white,
+                )),
+                const Divider(height: 15),
                 // Get the list of quizzes in the same mannar that questions are taken
                 GetX<QuizController>(
                   init: Get.put<QuizController>(QuizController()),
