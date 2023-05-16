@@ -7,7 +7,7 @@ class QuizHelper {
     return FirebaseFirestore.instance
         .collection('quiz')
         //Remove the following limit later.
-        .limit(10)
+        .limit(15)
         .snapshots()
         .map((query) {
       List<Question> questions = [];
@@ -24,7 +24,7 @@ class QuizHelper {
     return FirebaseFirestore.instance
         .collection('quiz')
         //Remove the following limit later.
-        .limit(10)
+        .limit(15)
         .snapshots()
         .map((query) {
       //Use Set to exclude duplicated values

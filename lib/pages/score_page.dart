@@ -133,11 +133,13 @@ class _ScorePageState extends State<ScorePage> {
                       animation: true,
                       radius: 100,
                       lineWidth: 30,
-                      percent: quizController.score / 5,
+                      percent: quizController.score /
+                          quizController.pickedQuestions.length,
                       progressColor: Colors.teal,
                       backgroundColor: Colors.teal.shade100,
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: Text("${quizController.score}/5",
+                      center: Text(
+                          "${quizController.score}/${quizController.pickedQuestions.length}",
                           style: TextStyle(
                               fontSize: 50, color: Colors.grey.shade700)),
                     ),
