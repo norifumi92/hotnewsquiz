@@ -26,9 +26,12 @@ class _MenuPageState extends State<MenuPage> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+    //Wait for a sec before the animation
+    Future.delayed(Duration(milliseconds: 300), () {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }
@@ -47,7 +50,7 @@ class _MenuPageState extends State<MenuPage> {
             gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.purple.shade300, Colors.purple.shade900],
+          colors: [Colors.purple.shade700, Colors.purple.shade900],
         )),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -88,17 +91,17 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget item(Quiz quiz, int index) {
     return AnimatedContainer(
-      height: 55,
+      height: screenHeight * 0.1,
       width: screenWidth,
       curve: Curves.easeInOut,
-      duration: Duration(milliseconds: 300 + (index * 100)),
+      duration: Duration(milliseconds: 300 + (index * 200)),
       transform:
           Matrix4.translationValues(startAnimation ? 0 : screenWidth, 0, 0),
       margin: const EdgeInsets.only(bottom: 12.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
           // color: _isButtonClicked ? Colors.grey.shade300 : Colors.white,
-          color: Colors.white,
+          color: Colors.deepPurpleAccent,
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
@@ -127,7 +130,7 @@ class _MenuPageState extends State<MenuPage> {
               quizController.pickUpQuestions(quiz.quizKey);
 
               // Delay execution for 1.5 second before navigating to QuizPage
-              Future.delayed(Duration(milliseconds: 1500), () {
+              Future.delayed(Duration(milliseconds: 1200), () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => QuizPage(quiz)),
@@ -135,8 +138,7 @@ class _MenuPageState extends State<MenuPage> {
               });
             },
             child: NormalText(
-              "クイズ(${quiz.quizText})",
-              color: Colors.grey.shade700,
+              "${quiz.quizText}のニュースから出題",
             ),
           )
         ],

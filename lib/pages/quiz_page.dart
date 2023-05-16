@@ -97,12 +97,12 @@ class QuizPageState extends State<QuizPage> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.purple.shade300, Colors.purple.shade900],
+            colors: [Colors.purple.shade700, Colors.purple.shade900],
           )),
           child: SafeArea(
             child: Padding(
@@ -144,7 +144,7 @@ class QuizPageState extends State<QuizPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [NormalText("残り${seconds}秒", size: 12)],
+                          children: [NormalText("残り${seconds}秒", size: 15)],
                         ),
                       ))
                     ],

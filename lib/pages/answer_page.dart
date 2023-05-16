@@ -20,7 +20,7 @@ class AnswerPage extends StatelessWidget {
             gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.purple.shade300, Colors.purple.shade900],
+          colors: [Colors.purple.shade700, Colors.purple.shade900],
         )),
         child: SafeArea(
           child: SingleChildScrollView(

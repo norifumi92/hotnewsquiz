@@ -106,7 +106,7 @@ class _ScorePageState extends State<ScorePage> {
             gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.purple.shade300, Colors.purple.shade900],
+          colors: [Colors.purple.shade700, Colors.purple.shade900],
         )),
         child: Align(
             child: Column(
