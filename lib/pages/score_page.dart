@@ -98,6 +98,14 @@ class _ScorePageState extends State<ScorePage> {
     final quizController = Get.find<QuizController>();
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.purple.shade800,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {},
+        ),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -109,42 +117,43 @@ class _ScorePageState extends State<ScorePage> {
           colors: [Colors.purple.shade700, Colors.purple.shade900],
         )),
         child: Align(
-            child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
-              margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
-              height: screenHeight * 0.6,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text("テスト結果",
+          child: Column(
+            children: [
+              // Container(
+              //   padding: const EdgeInsets.only(
+              //       top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
+              //   margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
+              //   height: screenHeight * 0.6,
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   child: Column(
+              //     children: [
+              const SizedBox(height: 20),
+              const NormalText("テスト結果", size: 25, isBold: true),
+              const SizedBox(height: 15),
+              Center(
+                child: CircularPercentIndicator(
+                  animationDuration: 1000,
+                  animation: true,
+                  radius: 100,
+                  lineWidth: 30,
+                  percent: quizController.score /
+                      quizController.pickedQuestions.length,
+                  progressColor: Colors.teal,
+                  backgroundColor: Colors.teal.shade100,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: Text(
+                      "${quizController.score}/${quizController.pickedQuestions.length}",
                       style:
-                          TextStyle(color: Colors.grey.shade700, fontSize: 25)),
-                  const SizedBox(height: 15),
-                  Center(
-                    child: CircularPercentIndicator(
-                      animationDuration: 1000,
-                      animation: true,
-                      radius: 100,
-                      lineWidth: 30,
-                      percent: quizController.score /
-                          quizController.pickedQuestions.length,
-                      progressColor: Colors.teal,
-                      backgroundColor: Colors.teal.shade100,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      center: Text(
-                          "${quizController.score}/${quizController.pickedQuestions.length}",
-                          style: TextStyle(
-                              fontSize: 50, color: Colors.grey.shade700)),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
+                          const TextStyle(fontSize: 50, color: Colors.white)),
+                ),
+              ),
+              const SizedBox(height: 25),
+              Center(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   ElevatedButton(
                     onPressed: () {
                       //Show a dialog to notice the user about the rewarded ad in advance
@@ -182,8 +191,9 @@ class _ScorePageState extends State<ScorePage> {
                                       Get.to(AnswerPage());
                                     }
                                   }),
+                              const SizedBox(width: 10),
                               ElevatedButton(
-                                child: Text('戻る'),
+                                child: const Text('戻る'),
                                 onPressed: () {
                                   Navigator.of(context)
                                       .pop(); // Close the dialog
@@ -195,15 +205,16 @@ class _ScorePageState extends State<ScorePage> {
                       );
                     },
                     child: const NormalText("解答をチェック"),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            const GoBackToMenuButton(),
-          ],
-        )),
+                  ),
+                  const SizedBox(width: 20),
+                  const GoBackToMenuButton(),
+                ]),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
+  // }
 }

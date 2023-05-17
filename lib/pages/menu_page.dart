@@ -22,16 +22,20 @@ class _MenuPageState extends State<MenuPage> {
   final QuizController quizController = Get.put(QuizController());
   List<String> quizList = [];
 
+  //scaffold key
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    //Wait for a sec before the animation
-    Future.delayed(Duration(milliseconds: 300), () {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        setState(() {
-          startAnimation = true;
-        });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
       });
     });
   }
@@ -42,6 +46,69 @@ class _MenuPageState extends State<MenuPage> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.purple.shade800,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: _openDrawer,
+        ),
+      ),
+      drawer: Container(
+        width: screenWidth * 0.3, // Adjust the width as per your preference
+        child: Drawer(
+          child: ListView(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  //add action
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10, top: 5),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.home),
+                      SizedBox(width: 10),
+                      Text('ホーム'),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  //add action
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10, top: 5),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.email),
+                      SizedBox(width: 10),
+                      Text('お問合わせ'),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  //add action
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10, top: 5),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.policy),
+                      SizedBox(width: 10),
+                      Text('規約'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -91,56 +158,76 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget item(Quiz quiz, int index) {
     return AnimatedContainer(
-      height: screenHeight * 0.1,
-      width: screenWidth,
+      height: 50,
+      width: screenWidth * 0.8,
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 300 + (index * 200)),
       transform:
           Matrix4.translationValues(startAnimation ? 0 : screenWidth, 0, 0),
-      margin: const EdgeInsets.only(bottom: 12.0),
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      margin: const EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
           // color: _isButtonClicked ? Colors.grey.shade300 : Colors.white,
           color: Colors.deepPurpleAccent,
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
-          TextButton(
-            onPressed: () async {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Center(
-                      child: Lottie.asset(
-                        'assets/quiz_animation.json', // replace with your own file name
-                        width: 300,
-                        height: 300,
-                      ),
-                    );
-                  });
+          GestureDetector(
+              onTap: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: Lottie.asset(
+                          'assets/quiz_animation.json', // replace with your own file name
+                          width: 300,
+                          height: 300,
+                        ),
+                      );
+                    });
 
-              //call shared preference and keep the fact that the button was clicked
-              // SharedPreferences prefs = await SharedPreferences.getInstance();
-              // setState(() {
-              //   _isButtonClicked = true;
-              //   prefs.setBool('isButtonClicked', true);
-              // });
+                //call shared preference and keep the fact that the button was clicked
+                // SharedPreferences prefs = await SharedPreferences.getInstance();
+                // setState(() {
+                //   _isButtonClicked = true;
+                //   prefs.setBool('isButtonClicked', true);
+                // });
 
-              //updated picked question list in quizcontroller
-              quizController.pickUpQuestions(quiz.quizKey);
+                //updated picked question list in quizcontroller
+                quizController.pickUpQuestions(quiz.quizKey);
 
-              // Delay execution for 1.5 second before navigating to QuizPage
-              Future.delayed(Duration(milliseconds: 1200), () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuizPage(quiz)),
-                );
-              });
-            },
-            child: NormalText(
-              "${quiz.quizText}のニュースから出題",
-            ),
-          )
+                // Delay execution for 1.5 second before navigating to QuizPage
+                Future.delayed(Duration(milliseconds: 1200), () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => QuizPage(quiz)),
+                  );
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 26,
+                    width: 26,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(color: Colors.teal),
+                    ),
+                    child: Icon(
+                      Icons.done,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  NormalText(
+                    "クイズ: ${quiz.quizText}",
+                    size: 20,
+                  ),
+                ],
+              ))
         ],
       ),
     );

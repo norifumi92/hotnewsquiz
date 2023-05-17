@@ -9,7 +9,7 @@ class GoBackToMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return ElevatedButton(
       onPressed: () {
         // Delete the existing instance of QuizController
         Get.delete<QuizController>();
@@ -22,18 +22,9 @@ class GoBackToMenuButton extends StatelessWidget {
           (route) => false,
         );
       },
-      child: Container(
-        padding: EdgeInsets.all(8.0),
-        margin: EdgeInsets.symmetric(horizontal: 20.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: NormalText(
-            "メニューに戻る",
-            color: Colors.purple,
-          ),
+      child: Center(
+        child: NormalText(
+          "メニューに戻る",
         ),
       ),
     );
