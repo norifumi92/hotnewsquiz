@@ -153,6 +153,48 @@ class _MenuPageState extends State<MenuPage> {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+          color: Colors.purple.shade900
+              .withOpacity(0.9), // Set the desired color and opacity
+          padding: EdgeInsets.all(16.0), // Adjust the padding as needed
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: 26,
+                width: 26,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: Colors.teal),
+                ),
+                child: Icon(
+                  Icons.done,
+                  size: 16,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const NormalText("受験済"),
+              const SizedBox(width: 25),
+              Container(
+                height: 26,
+                width: 26,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: const Icon(
+                  Icons.question_mark,
+                  size: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const NormalText("未受験"),
+            ],
+          )),
     );
   }
 
@@ -223,7 +265,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                   const SizedBox(width: 10),
                   NormalText(
-                    "クイズ: ${quiz.quizText}",
+                    "クイズ: ${quiz.quizText}のニュースから",
                     size: 20,
                   ),
                 ],
