@@ -25,6 +25,7 @@ class NormalText extends StatelessWidget {
               color: color,
               fontSize: size,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              overflow: TextOverflow.clip, // Truncate overflowing text
             ),
           )
         : Text(
@@ -33,6 +34,7 @@ class NormalText extends StatelessWidget {
               color: color,
               fontSize: size,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              overflow: TextOverflow.clip,
             ),
           );
   }

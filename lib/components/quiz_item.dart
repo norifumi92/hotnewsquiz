@@ -122,7 +122,7 @@ class _QuizItemState extends State<QuizItem> {
                   const SizedBox(width: 10),
                   NormalText(
                     "クイズ: ${widget.quiz.quizText}のニュースから",
-                    size: 20,
+                    size: 18,
                   ),
                 ],
               ))

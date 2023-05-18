@@ -7,12 +7,11 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width *
-          0.3, // Adjust the width as per your preference
+      width: 200, // Adjust the width as per your preference
       child: Drawer(
         child: Container(
           //To change the color of Drawer, Container must be inside
-          color: Color.fromARGB(255, 60, 15, 116),
+          color: const Color.fromARGB(255, 60, 15, 116),
           child: ListView(
             children: [
               GestureDetector(
