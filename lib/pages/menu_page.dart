@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/pages/quiz_page.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
+import 'package:hotnewsquiz/components/quiz_item.dart';
 import 'package:lottie/lottie.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/quiz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -18,9 +20,12 @@ class _MenuPageState extends State<MenuPage> {
   double screenHeight = 0;
   bool startAnimation = false;
 
+  //Define completed quizzes
+  List<String> _completedQuizzes = [];
+
   //Call quiz controller
   final QuizController quizController = Get.put(QuizController());
-  List<String> quizList = [];
+  List<String>? quizList;
 
   //scaffold key
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -37,6 +42,16 @@ class _MenuPageState extends State<MenuPage> {
       setState(() {
         startAnimation = true;
       });
+    });
+
+    //Load the quizzes already taken from the shared preference of the local device
+    _loadCompletedQuizzes();
+  }
+
+  void _loadCompletedQuizzes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _completedQuizzes = prefs.getStringList('completedQuizzes') ?? [];
     });
   }
 
@@ -143,7 +158,12 @@ class _MenuPageState extends State<MenuPage> {
                       shrinkWrap: true,
                       itemCount: quizController.quizzes.length,
                       itemBuilder: (context, index) {
-                        return item(quizController.quizzes[index], index);
+                        return QuizItem(
+                          index,
+                          quiz: quizController.quizzes[index],
+                          screenWidth: screenWidth,
+                          startAnimation: startAnimation,
+                        );
                       },
                     );
                   },
@@ -156,7 +176,7 @@ class _MenuPageState extends State<MenuPage> {
       bottomNavigationBar: Container(
           color: Colors.purple.shade900
               .withOpacity(0.9), // Set the desired color and opacity
-          padding: EdgeInsets.all(16.0), // Adjust the padding as needed
+          padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -195,83 +215,6 @@ class _MenuPageState extends State<MenuPage> {
               const NormalText("未受験"),
             ],
           )),
-    );
-  }
-
-  Widget item(Quiz quiz, int index) {
-    return AnimatedContainer(
-      height: 50,
-      width: screenWidth * 0.8,
-      curve: Curves.easeInOut,
-      duration: Duration(milliseconds: 300 + (index * 200)),
-      transform:
-          Matrix4.translationValues(startAnimation ? 0 : screenWidth, 0, 0),
-      margin: const EdgeInsets.only(bottom: 10.0),
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          // color: _isButtonClicked ? Colors.grey.shade300 : Colors.white,
-          color: Colors.deepPurpleAccent,
-          borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        children: [
-          GestureDetector(
-              onTap: () async {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Center(
-                        child: Lottie.asset(
-                          'assets/quiz_animation.json', // replace with your own file name
-                          width: 300,
-                          height: 300,
-                        ),
-                      );
-                    });
-
-                //call shared preference and keep the fact that the button was clicked
-                // SharedPreferences prefs = await SharedPreferences.getInstance();
-                // setState(() {
-                //   _isButtonClicked = true;
-                //   prefs.setBool('isButtonClicked', true);
-                // });
-
-                //updated picked question list in quizcontroller
-                quizController.pickUpQuestions(quiz.quizKey);
-
-                // Delay execution for 1.5 second before navigating to QuizPage
-                Future.delayed(Duration(milliseconds: 1200), () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => QuizPage(quiz)),
-                  );
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 26,
-                    width: 26,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: Colors.teal),
-                    ),
-                    child: Icon(
-                      Icons.done,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  NormalText(
-                    "クイズ: ${quiz.quizText}のニュースから",
-                    size: 20,
-                  ),
-                ],
-              ))
-        ],
-      ),
     );
   }
 }
