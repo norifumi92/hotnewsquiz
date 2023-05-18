@@ -3,10 +3,9 @@ import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/go_back_to_menu.dart';
-import 'ad_test_page.dart';
+import 'package:hotnewsquiz/components/my_drawer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hotnewsquiz/pages/answer_page.dart';
-import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -91,6 +90,13 @@ class _ScorePageState extends State<ScorePage> {
     );
   }
 
+  //scaffold key
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -98,14 +104,16 @@ class _ScorePageState extends State<ScorePage> {
     final quizController = Get.find<QuizController>();
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.purple.shade800,
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: _openDrawer,
         ),
       ),
+      drawer: const MyDrawer(),
       body: Container(
         width: double.infinity,
         height: double.infinity,

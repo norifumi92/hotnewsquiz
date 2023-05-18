@@ -70,7 +70,7 @@ class _MenuPageState extends State<MenuPage> {
           onPressed: _openDrawer,
         ),
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: Container(
         width: double.infinity,
         height: double.infinity,
