@@ -61,7 +61,6 @@ class IntroPage extends StatelessWidget {
     //Before navigating to the menu, keep the fact that the user saw this intro in shared preference
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isIntroButtonClicked', true);
-    print(prefs.getBool('isIntroButtonClicked'));
 
     //navigate to the menu
     Navigator.push(

@@ -41,7 +41,9 @@ class _QuizItemState extends State<QuizItem> {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
           // color: _isButtonClicked ? Colors.grey.shade300 : Colors.white,
-          color: Colors.deepPurpleAccent,
+          color: widget.isCompleted
+              ? Colors.deepPurple.shade900
+              : Colors.deepPurpleAccent.shade700,
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
