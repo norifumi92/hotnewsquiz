@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotnewsquiz/pages/quiz_page.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/quiz_item.dart';
-import 'package:lottie/lottie.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/quiz.dart';
@@ -52,6 +50,7 @@ class _MenuPageState extends State<MenuPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _completedQuizzes = prefs.getStringList('completedQuizzes') ?? [];
+      print(_completedQuizzes);
     });
   }
 
@@ -158,9 +157,15 @@ class _MenuPageState extends State<MenuPage> {
                       shrinkWrap: true,
                       itemCount: quizController.quizzes.length,
                       itemBuilder: (context, index) {
+                        Quiz quiz = quizController.quizzes[index];
+                        //Check if the quiz is already completed
+                        bool isCompleted =
+                            _completedQuizzes.contains(quiz.quizKey);
+
                         return QuizItem(
                           index,
                           quiz: quizController.quizzes[index],
+                          isCompleted: isCompleted,
                           screenWidth: screenWidth,
                           startAnimation: startAnimation,
                         );
