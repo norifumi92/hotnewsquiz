@@ -31,7 +31,7 @@ class _QuizItemState extends State<QuizItem> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      height: 50,
+      // height: 50,
       width: widget.screenWidth * 0.8,
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 300 + (widget.index * 200)),
@@ -121,7 +121,7 @@ class _QuizItemState extends State<QuizItem> {
                         ),
                   const SizedBox(width: 10),
                   NormalText(
-                    "クイズ: ${widget.quiz.quizText}のニュースから",
+                    "クイズ: ${widget.quiz.quizText}のニュース",
                     size: 18,
                   ),
                 ],
