@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/components/normal_text.dart';
 import 'package:hotnewsquiz/components/quiz_item.dart';
+import 'package:hotnewsquiz/components/my_drawer.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/models/quiz.dart';
@@ -69,60 +70,7 @@ class _MenuPageState extends State<MenuPage> {
           onPressed: _openDrawer,
         ),
       ),
-      drawer: Container(
-        width: screenWidth * 0.3, // Adjust the width as per your preference
-        child: Drawer(
-          child: ListView(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  //add action
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.home),
-                      SizedBox(width: 10),
-                      Text('ホーム'),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  //add action
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.email),
-                      SizedBox(width: 10),
-                      Text('お問合わせ'),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  //add action
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.policy),
-                      SizedBox(width: 10),
-                      Text('規約'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Container(
         width: double.infinity,
         height: double.infinity,
