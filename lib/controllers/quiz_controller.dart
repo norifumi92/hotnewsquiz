@@ -34,8 +34,14 @@ class QuizController extends GetxController {
 
   @override
   void onReady() {
-    questionList.bindStream(QuizHelper.questionStream());
-    quizList.bindStream(QuizHelper.quizListStream());
+    try {
+      questionList.bindStream(QuizHelper.questionStream());
+      quizList.bindStream(QuizHelper.quizListStream());
+    } catch (e) {
+      // Exception handling code
+      print('Data was not fetched from Firebase.');
+      print('Exception caught: $e');
+    }
   }
 
   //pick up questions to display
