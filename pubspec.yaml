@@ -45,6 +45,7 @@ dependencies:
   google_mobile_ads: ^3.0.0
   flutter_dotenv: ^5.0.2
   flutter_markdown: ^0.6.14
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
     - assets/intro_animation_1.json
     - assets/intro_animation_2.json
     - assets/intro_animation_3.json
+    
       
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -100,3 +102,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  #  flutter icon setting
+flutter_icons:       
+  android: true
+  ios: true
+  image_path: "assets/hot_news_quiz_logo.png"

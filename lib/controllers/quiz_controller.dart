@@ -50,6 +50,7 @@ class QuizController extends GetxController {
     String formattedQuizKey =
         "${quizKey.substring(0, 4)}-${quizKey.substring(4, 6)}-${quizKey.substring(6, 8)}";
 
+    print(formattedQuizKey);
     List<Question> pickedQuestions = questionList.value
         .where((question) => question.publishedDate == formattedQuizKey)
         .toList();

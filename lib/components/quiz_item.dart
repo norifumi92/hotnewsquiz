@@ -72,8 +72,9 @@ class _QuizItemState extends State<QuizItem> {
                     prefs.getStringList('completedQuizzes') ?? [];
 
                 // Step 2: Add the new element to the list
-                completedQuizzes.add(widget.quiz.quizKey);
-
+                if (!completedQuizzes.contains(widget.quiz.quizKey)) {
+                  completedQuizzes.add(widget.quiz.quizKey);
+                }
                 // Step 3: Save the updated string back to SharedPreferences
                 prefs.setStringList(
                     'completedQuizzes', completedQuizzes.toList());
