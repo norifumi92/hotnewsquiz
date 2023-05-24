@@ -25,9 +25,6 @@ class QuizController extends GetxController {
   //Store the list of user's answers
   var selectedAnswerList = [].obs;
 
-  //Store the list of actual answers. Temporarily set 0 in all elements.
-  var realAnswerList = [].obs;
-
   // Declare a PageController variable in your state or controller
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
@@ -97,12 +94,30 @@ class QuizController extends GetxController {
   int calculateScore() {
     int score = 0;
     for (int i = 0;
-        i < selectedAnswerList.length && i < realAnswerList.length;
+        i < selectedAnswerList.length && i < pickedQuestionList.value.length;
         i++) {
-      if (selectedAnswerList[i] == realAnswerList[i]) {
+      int trueAnswer = convertToAnswerInt(pickedQuestionList.value[i].answer);
+      if (selectedAnswerList[i] == trueAnswer) {
+        print(selectedAnswerList[i]);
+        print(trueAnswer);
         score++;
       }
     }
     return score;
+  }
+
+  //convert alphabetic answer to integer
+  int convertToAnswerInt(String answerString) {
+    if (answerString.trim() == "A") {
+      return 0;
+    } else if (answerString.trim() == "B") {
+      return 1;
+    } else if (answerString.trim() == "C") {
+      return 2;
+    } else if (answerString.trim() == "D") {
+      return 3;
+    } else {
+      return 99;
+    }
   }
 }

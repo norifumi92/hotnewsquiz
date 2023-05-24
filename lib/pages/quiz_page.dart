@@ -18,11 +18,11 @@ class QuizPage extends StatefulWidget {
 class QuizPageState extends State<QuizPage> {
   final QuizController quizController = Get.put(QuizController());
   List<Question> questions = [];
+  int seconds = 60;
 
   @override
   void initState() {
     super.initState();
-
     //load quizzes from question controller. initState is called only once.
     // _loadQuestions(); -- This does not work because initState cannot wait for the response
 
@@ -43,7 +43,6 @@ class QuizPageState extends State<QuizPage> {
     super.dispose();
   }
 
-  int seconds = 30;
   Timer? timer;
   bool _isSelected = false;
 
@@ -73,7 +72,7 @@ class QuizPageState extends State<QuizPage> {
 
   void resetTimer() {
     setState(() {
-      seconds = 30; // replace 30 with your initial value
+      seconds = 60; // replace 30 with your initial value
       timer?.cancel(); // cancel the current timer if it exists
       _isSelected = false; // reset _isSelected flag if needed
     });
@@ -123,7 +122,7 @@ class QuizPageState extends State<QuizPage> {
                         builder: (context, constraints) {
                           double width;
                           if (seconds > 3) {
-                            width = constraints.maxWidth * seconds / 30;
+                            width = constraints.maxWidth * seconds / 60;
                           } else if (seconds > 0) {
                             width = constraints.maxWidth * 0.1;
                           } else {

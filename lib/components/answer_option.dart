@@ -25,7 +25,7 @@ class _AnswerOptionState extends State<AnswerOption> {
     QuizController quizController = Get.find<QuizController>();
 
     //Convert trueAnswer to integer
-    int trueAnswerInt = convertToAnswerInt(widget.trueAnswer);
+    int trueAnswerInt = quizController.convertToAnswerInt(widget.trueAnswer);
 
     final bool isCorrect = (widget.optionId == trueAnswerInt);
     final bool isSelected = (widget.optionId == widget.selectedAnswer);
@@ -82,19 +82,5 @@ class _AnswerOptionState extends State<AnswerOption> {
         ],
       ),
     );
-  }
-
-  int convertToAnswerInt(String answerString) {
-    if (answerString.trim() == "A") {
-      return 0;
-    } else if (answerString.trim() == "B") {
-      return 1;
-    } else if (answerString.trim() == "C") {
-      return 2;
-    } else if (answerString.trim() == "D") {
-      return 3;
-    } else {
-      return 99;
-    }
   }
 }
