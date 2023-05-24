@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hotnewsquiz/controllers/quiz_controller.dart';
 import 'package:get/get.dart';
 import 'package:hotnewsquiz/pages/quiz_page.dart';
-import 'package:hotnewsquiz/pages/score_page.dart';
 
 class QuestionOption extends StatefulWidget {
   final String optionText;
-  final int selectedAnswer;
+  final int optionId;
 
-  const QuestionOption(this.optionText, this.selectedAnswer);
+  const QuestionOption(
+      {required this.optionText, required this.optionId, Key? key})
+      : super(key: key);
 
   @override
   _QuestionOptionState createState() => _QuestionOptionState();
@@ -27,7 +28,7 @@ class _QuestionOptionState extends State<QuestionOption> {
           });
 
           //save the answer selected to quizController's list
-          quizController.selectedAnswerList.add(widget.selectedAnswer);
+          quizController.selectedAnswerList.add(widget.optionId);
 
           int currentPageCount = quizController.pageController.page!.toInt();
           int currentQuestionNumber = currentPageCount + 1;

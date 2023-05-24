@@ -26,7 +26,7 @@ class QuizController extends GetxController {
   var selectedAnswerList = [].obs;
 
   //Store the list of actual answers. Temporarily set 0 in all elements.
-  var realAnswerList = [0, 0, 0, 0, 0].obs;
+  var realAnswerList = [].obs;
 
   // Declare a PageController variable in your state or controller
   final PageController _pageController = PageController();

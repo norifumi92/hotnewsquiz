@@ -22,7 +22,10 @@ class QuestionCard extends StatelessWidget {
           NormalText(question.questionText,
               color: Colors.black, selectable: true),
           for (var i = 0; i < question.options.length; i++)
-            QuestionOption(question.options[i], i),
+            QuestionOption(
+              optionText: question.options[i],
+              optionId: i,
+            ),
         ],
       ),
     );

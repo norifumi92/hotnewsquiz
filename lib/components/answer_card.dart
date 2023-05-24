@@ -5,8 +5,11 @@ import 'package:hotnewsquiz/models/question.dart';
 
 class AnswerCard extends StatelessWidget {
   final Question question;
+  final int selectedAnswer;
 
-  const AnswerCard({required this.question, Key? key}) : super(key: key);
+  const AnswerCard(
+      {required this.question, required this.selectedAnswer, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +48,10 @@ class AnswerCard extends StatelessWidget {
             ),
             //Options
             for (var i = 0; i < question.options.length; i++)
-              AnswerOption(
-                question.options[i],
-                optionIndex: i,
-                trueAnswer: 0, //TODO: replace this with true answer
-              ),
+              AnswerOption(question.options[i],
+                  optionId: i,
+                  trueAnswer: question.answer,
+                  selectedAnswer: selectedAnswer),
           ],
         ),
       ),
