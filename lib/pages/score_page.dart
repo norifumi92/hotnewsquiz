@@ -103,122 +103,129 @@ class _ScorePageState extends State<ScorePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     final quizController = Get.find<QuizController>();
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.purple.shade800,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: _openDrawer,
+    return WillPopScope(
+      onWillPop: () async =>
+          false, //With this, the default goback button is deactivated
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.purple.shade800,
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: _openDrawer,
+          ),
         ),
-      ),
-      drawer: const MyDrawer(),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Colors.purple.shade700, Colors.purple.shade900],
-        )),
-        child: Align(
-          child: Column(
-            children: [
-              // Container(
-              //   padding: const EdgeInsets.only(
-              //       top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
-              //   margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
-              //   height: screenHeight * 0.6,
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //     borderRadius: BorderRadius.circular(10),
-              //   ),
-              //   child: Column(
-              //     children: [
-              const SizedBox(height: 20),
-              const NormalText("テスト結果", size: 25, isBold: true),
-              const SizedBox(height: 15),
-              Center(
-                child: CircularPercentIndicator(
-                  animationDuration: 1000,
-                  animation: true,
-                  radius: 100,
-                  lineWidth: 30,
-                  percent: quizController.score /
-                      quizController.pickedQuestions.length,
-                  progressColor: Colors.teal,
-                  backgroundColor: Colors.teal.shade100,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  center: Text(
-                      "${quizController.score}/${quizController.pickedQuestions.length}",
-                      style:
-                          const TextStyle(fontSize: 50, color: Colors.white)),
-                ),
-              ),
-              const SizedBox(height: 25),
-              Center(
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      //Show a dialog to notice the user about the rewarded ad in advance
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('動画広告について'),
-                            content: Text(
-                                'Hot News Quizでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
-                            actions: [
-                              ElevatedButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    // For mobile, play the ad
-                                    if (!kIsWeb) {
-                                      if (isAdLoaded) {
-                                        _rewardedAd!.show(onUserEarnedReward:
-                                            (AdWithoutView ad,
-                                                RewardItem rewardItem) {
-                                          setState(() {
-                                            //reward for watching the ad
-                                            amount = rewardItem.amount;
-                                          });
-                                          Get.to(AnswerPage());
-                                          ;
-                                        }); // Show the rewarded ad if it's not null
-                                      } else {
-                                        print(
-                                            "RewardedAd not loaded yet"); // Handle the case where the ad is not loaded
-                                      }
-                                    }
-                                    // For browser, skip the ad
-                                    else {
-                                      Get.to(AnswerPage());
-                                    }
-                                  }),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                child: const Text('戻る'),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: const NormalText("解答をチェック"),
+        drawer: const MyDrawer(),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.purple.shade700, Colors.purple.shade900],
+          )),
+          child: Align(
+            child: Column(
+              children: [
+                // Container(
+                //   padding: const EdgeInsets.only(
+                //       top: 10.0, bottom: 3.0, left: 8.0, right: 8.0),
+                //   margin: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
+                //   height: screenHeight * 0.6,
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   child: Column(
+                //     children: [
+                const SizedBox(height: 20),
+                const NormalText("テスト結果", size: 25, isBold: true),
+                const SizedBox(height: 15),
+                Center(
+                  child: CircularPercentIndicator(
+                    animationDuration: 1000,
+                    animation: true,
+                    radius: 100,
+                    lineWidth: 30,
+                    percent: quizController.score /
+                        quizController.pickedQuestions.length,
+                    progressColor: Colors.teal,
+                    backgroundColor: Colors.teal.shade100,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    center: Text(
+                        "${quizController.score}/${quizController.pickedQuestions.length}",
+                        style:
+                            const TextStyle(fontSize: 50, color: Colors.white)),
                   ),
-                  const SizedBox(width: 20),
-                  const GoBackToMenuButton(),
-                ]),
-              )
-            ],
+                ),
+                const SizedBox(height: 25),
+                Center(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            //Show a dialog to notice the user about the rewarded ad in advance
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('動画広告について'),
+                                  content: Text(
+                                      'Hot News Quizでは動画広告を再生した方のみに解答・解説を提供しています。同意いただける方のみ、「OK」を押して解答へお進みください。'),
+                                  actions: [
+                                    ElevatedButton(
+                                        child: const Text('OK'),
+                                        onPressed: () {
+                                          // For mobile, play the ad
+                                          if (!kIsWeb) {
+                                            if (isAdLoaded) {
+                                              _rewardedAd!.show(
+                                                  onUserEarnedReward:
+                                                      (AdWithoutView ad,
+                                                          RewardItem
+                                                              rewardItem) {
+                                                setState(() {
+                                                  //reward for watching the ad
+                                                  amount = rewardItem.amount;
+                                                });
+                                                Get.to(AnswerPage());
+                                                ;
+                                              }); // Show the rewarded ad if it's not null
+                                            } else {
+                                              print(
+                                                  "RewardedAd not loaded yet"); // Handle the case where the ad is not loaded
+                                            }
+                                          }
+                                          // For browser, skip the ad
+                                          else {
+                                            Get.to(AnswerPage());
+                                          }
+                                        }),
+                                    const SizedBox(width: 10),
+                                    ElevatedButton(
+                                      child: const Text('戻る'),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const NormalText("解答をチェック"),
+                        ),
+                        const SizedBox(width: 20),
+                        const GoBackToMenuButton(),
+                      ]),
+                )
+              ],
+            ),
           ),
         ),
       ),
