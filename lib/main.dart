@@ -18,9 +18,9 @@ void main() async {
   if (!kIsWeb) {
     MobileAds.instance.initialize();
 
-    RequestConfiguration configuration = RequestConfiguration(
-        testDeviceIds: ["3AC45BF3BACE609A7F26FA203604F81F"]);
-    MobileAds.instance.updateRequestConfiguration(configuration);
+    // RequestConfiguration configuration = RequestConfiguration(
+    //     testDeviceIds: ["3AC45BF3BACE609A7F26FA203604F81F"]);
+    // MobileAds.instance.updateRequestConfiguration(configuration);
   }
   runApp(const MyApp());
 }

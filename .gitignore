@@ -44,5 +44,6 @@ lib/firebase_options.dart
 macos/Runner/GoogleService-Info.plist
 macos/firebase_app_id_file.json
 
-#admods helper
+#admods helper and its constant
 lib/helpers/ad_helper.dart
+lib/ad_constant.dart

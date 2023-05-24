@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hotnewsquiz/pages/answer_page.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hotnewsquiz/ad_constant.dart';
 
 class ScorePage extends StatefulWidget {
   const ScorePage({super.key});
@@ -19,7 +20,8 @@ class ScorePage extends StatefulWidget {
 class _ScorePageState extends State<ScorePage> {
   //rewarded ad config
   bool isAdLoaded = false;
-  final String rewardedAdUnit = "ca-app-pub-3940256099942544/5224354917";
+  final String rewardedAdUnit = AdConstants.rewardedAdUnitId;
+
   RewardedAd? _rewardedAd;
   num amount = 0;
 
