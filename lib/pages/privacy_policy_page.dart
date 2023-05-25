@@ -87,7 +87,7 @@ Hot News Quizは、ユーザーの情報を適切に保護するために合理�
 ## お問い合わせ先
 ご質問やプライバシーポリシーに関するお問い合わせは、以下の連絡先までご連絡ください。
 
-noristyle92@gmail.com
+norifumiirie@gmail.com
 
 ''';
 }
