@@ -163,7 +163,8 @@ class QuizPageState extends State<QuizPage> {
                                 children: [
                                   Align(
                                     alignment: Alignment.center,
-                                    child: NormalText("第${index + 1}問"),
+                                    child: NormalText(
+                                        "${widget.quiz.quizText} 第${index + 1}問"),
                                   ),
                                   const Divider(thickness: 1.5),
                                   const SizedBox(height: 10),

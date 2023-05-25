@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         "/ScorePage": (context) => ScorePage(),
         "/AnswerPage": (context) => AnswerPage(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
