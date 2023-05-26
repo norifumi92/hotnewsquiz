@@ -1,4 +1,4 @@
-package com.example.hotnewsquiz
+package com.norifumi.hotnewsquiz
 
 import io.flutter.embedding.android.FlutterActivity
 
