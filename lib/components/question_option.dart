@@ -30,15 +30,13 @@ class _QuestionOptionState extends State<QuestionOption> {
           //save the answer selected to quizController's list
           quizController.selectedAnswerList.add(widget.optionId);
 
-          int currentPageCount = quizController.pageController.page!.toInt();
-          int currentQuestionNumber = currentPageCount + 1;
-
-          //set the question count
-          int questionCount = quizController.pickedQuestions.length;
+          //STEP1: Check if the question is the last one
+          bool isLastQuestion = quizController.isLastQuestion();
 
           //if this is not the last question, go to the next question
-          if (currentQuestionNumber < questionCount) {
+          if (!isLastQuestion) {
             quizController.nextQuestion();
+            quizController.rxRemainingTime.value = 30 + 1;
           }
 
           //If this is the last, show the loading dialog until the score is calculated or 2 seconds has passed.
@@ -51,23 +49,11 @@ class _QuestionOptionState extends State<QuestionOption> {
                   );
                 });
 
-            //Instead of passing the resetTimer function from QuizPage up until here, get it from context
-            final _quizPageState =
+            quizController.moveToScorePage();
+
+            final quizPageState =
                 context.findAncestorStateOfType<QuizPageState>();
-            _quizPageState?.resetTimer();
-
-            quizController.timeUp();
-
-            // pop the loading circle
-            // Navigator.pop(context);
-
-            // move to score page
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //       //builder: (context) => StartAnimationPage()),
-            //       builder: (context) => const ScorePage()),
-            // );
+            quizPageState?.resetTimer();
           }
         },
         child: Container(

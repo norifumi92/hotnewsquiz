@@ -18,7 +18,6 @@ class QuizPage extends StatefulWidget {
 class QuizPageState extends State<QuizPage> {
   final QuizController quizController = Get.put(QuizController());
   List<Question> questions = [];
-  int seconds = 60;
 
   @override
   void initState() {
@@ -44,27 +43,35 @@ class QuizPageState extends State<QuizPage> {
   }
 
   Timer? timer;
-  bool _isSelected = false;
+  // bool _isSelected = false;
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        // print(seconds);
-        if (seconds > 0) {
-          seconds--;
-        } else {
-          timer.cancel();
-          _isSelected = true;
-          //Call timeup in QuizController
-          quizController.timeUp();
-
-          // move to score page
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       //builder: (context) => StartAnimationPage()),
-          //       builder: (context) => const ScorePage()),
-          // );
+        if (quizController.remainingTime > 0) {
+          quizController.rxRemainingTime.value -= 1;
+        }
+        //When no time remains
+        else {
+          //STEP1: Check if the question is the last one
+          bool isLastQuestion = quizController.isLastQuestion();
+          //STEP2: If it is not the last one, go to the next question. Else, go to the score page.
+          if (!isLastQuestion) {
+            quizController.nextQuestion();
+          } else {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                });
+            quizController.moveToScorePage();
+            resetTimer();
+          }
+          //STEP3: set the time back
+          quizController.rxRemainingTime.value = 30 + 1;
+          // _isSelected = true;
         }
       });
     });
@@ -72,9 +79,10 @@ class QuizPageState extends State<QuizPage> {
 
   void resetTimer() {
     setState(() {
-      seconds = 60; // replace 30 with your initial value
+      quizController.rxRemainingTime.value =
+          31; // replace 30 with your initial value
       timer?.cancel(); // cancel the current timer if it exists
-      _isSelected = false; // reset _isSelected flag if needed
+      //_isSelected = false; // reset _isSelected flag if needed
     });
   }
 
@@ -121,9 +129,11 @@ class QuizPageState extends State<QuizPage> {
                       LayoutBuilder(
                         builder: (context, constraints) {
                           double width;
-                          if (seconds > 3) {
-                            width = constraints.maxWidth * seconds / 60;
-                          } else if (seconds > 0) {
+                          if (quizController.remainingTime > 3) {
+                            width = constraints.maxWidth *
+                                quizController.remainingTime /
+                                30;
+                          } else if (quizController.remainingTime > 0) {
                             width = constraints.maxWidth * 0.1;
                           } else {
                             width = 0;
@@ -143,7 +153,10 @@ class QuizPageState extends State<QuizPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [NormalText("残り${seconds}秒", size: 15)],
+                          children: [
+                            NormalText("残り${quizController.remainingTime}秒",
+                                size: 15)
+                          ],
                         ),
                       ))
                     ],

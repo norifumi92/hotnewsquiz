@@ -22,6 +22,10 @@ class QuizController extends GetxController {
   RxInt rxScore = RxInt(0);
   int get score => rxScore.value;
 
+  //Define remainingTime and its getter
+  RxInt rxRemainingTime = RxInt(30);
+  int get remainingTime => rxRemainingTime.value;
+
   //Store the list of user's answers
   var selectedAnswerList = [].obs;
 
@@ -56,6 +60,21 @@ class QuizController extends GetxController {
     pickedQuestionList.value = pickedQuestions;
   }
 
+  bool isLastQuestion() {
+    int currentPageCount = pageController.page!.toInt();
+    int currentQuestionNumber = currentPageCount + 1;
+
+    //set the question count
+    int questionCount = pickedQuestions.length;
+
+    //if this is not the last question, go to the next question
+    if (currentQuestionNumber < questionCount) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   //next question method using PageController
   void nextQuestion() {
     // The following logic was moved to quiz_option.dart
@@ -81,7 +100,7 @@ class QuizController extends GetxController {
   }
 
   //define method for timeup event
-  void timeUp() {
+  void moveToScorePage() {
     Future.delayed(const Duration(seconds: 2), () {
       int score = calculateScore();
       rxScore.value = score;
