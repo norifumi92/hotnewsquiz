@@ -6,8 +6,8 @@ class QuizHelper {
   static Stream<List<Question>> questionStream() {
     return FirebaseFirestore.instance
         .collection('quiz')
-        //Remove the following limit later.
-        .limit(15)
+        .orderBy('published_date', descending: true)
+        .limit(40)
         .snapshots()
         .map((query) {
       List<Question> questions = [];
@@ -23,8 +23,8 @@ class QuizHelper {
   static Stream<List<Quiz>> quizListStream() {
     return FirebaseFirestore.instance
         .collection('quiz')
-        //Remove the following limit later.
-        .limit(15)
+        .orderBy('published_date', descending: true)
+        .limit(40)
         .snapshots()
         .map((query) {
       //Use Set to exclude duplicated values
